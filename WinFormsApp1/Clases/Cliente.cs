@@ -12,9 +12,16 @@ namespace WinFormsApp1.Clases
         //atributos
         private float tiempoEspera;
         private float tiempoLlegada;
+        private Estado sA;
+        private int id;
 
-
-
+        public Cliente(Estado sA, float reloj)
+        {
+            this.sA = sA;
+            this.tiempoLlegada = reloj;
+            IdClientes i = IdClientes.getInstance();
+            id = i.GetIdClient();
+        }
 
         //metodos
         public void newEstSA(string nomPelu)  //tiene que retornar Cliente
@@ -26,17 +33,39 @@ namespace WinFormsApp1.Clases
         
         }
 
-        public void calcularNuevoTiempoEspera() {
-            
+        public void calcularNuevoTiempoEspera(float reloj) {
+            this.tiempoEspera = reloj - tiempoLlegada;
         }
 
-        public void tiempoEsperaMayor() { 
-        
+        public bool tiempoEsperaMayor() {
+            if (tiempoEspera > 0.5f) {
+                return true;
+            }
+            return false;
         }
 
         public void setEstadoSA(Estado estado) {
         
         }
 
+        internal int getId()
+        {
+            return this.id;
+        }
+
+        internal string getNombreEstado()
+        {
+            return this.sA.getNombre();
+        }
+
+        internal float getTiempoLlegada()
+        {
+            return this.tiempoLlegada;
+        }
+
+        internal float getTiempoEspera()
+        {
+            return this.tiempoEspera;
+        }
     }
 }

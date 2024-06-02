@@ -23,5 +23,8 @@ namespace WinFormsApp1.Clases
         {
             this.nombre = nombre;
         }
+        public string getNombre() {
+            return this.nombre;
+        }
     }
 }
