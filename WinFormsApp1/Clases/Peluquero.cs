@@ -32,22 +32,27 @@ namespace WinFormsApp1.Clases
             this.tiempoLibre = 0;
         }
 
-        public void finAtencion(Estado Libre, Estado Ocupado) 
+        public int finAtencionCliente(Estado Libre, Estado Ocupado, Estado SA, Estado SVA, Estado SVB, float reloj, double RNDFinAtencion) 
         {
             int colaAtencion = this.clientesEnCola();
-            
+            int id;
             if(colaAtencion == 0)
             {
                 this.setEstadoLibre(Libre);
+                id = clienteAtendiendo.getId();
+                clienteAtendiendo = null;
+                finAtencion = 0f;
             }
             else
             {
                 this.setEstadoOcupado(Ocupado);
                 cambiarEstadoCliente(cola[0], SA, SVA, SVB);
-                clienteAtendiendo = cola[0]
+                id = clienteAtendiendo.getId();
+                clienteAtendiendo = cola[0];
+                this.calcularFinAtencion(RNDFinAtencion, reloj);
                 cola.Remove(cola[0]);
             }
-
+            return id;
         }
 
         public void cambiarEstadoCliente(Cliente cliente, Estado SA, Estado SVA, Estado SVB)

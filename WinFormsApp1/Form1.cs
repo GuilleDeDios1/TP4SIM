@@ -82,9 +82,25 @@ namespace WinFormsApp1
 
             desdeClient = (int)txtDesdeCliente.Value;
             hastaClient = (int)txtHastaCliente.Value;
+            if (reloj != 0 && diaAnterior != 0) {
+                
+            }
+            else {
+                if (tiempoLlegada < (float)Aprendiz.getFinAtencion() && tiempoLlegada < (float)VeteranoA.getFinAtencion() && tiempoLlegada < (float)VeteranoB.getFinAtencion())
+                {
+                    llegadaCliente();
+                }
+                else
+                {
+                    finAtencion();
+                }
+            }
+            
+
         }
 
-        public void llegadaCliente () {
+        public void llegadaCliente ()
+        {
             calcularTiempoLlegada();
             crearCliente();
             verificarTiempoEsperaCliente();
@@ -96,15 +112,72 @@ namespace WinFormsApp1
         public void finAtencion()
         {
             verQuePeluquero();
-            quienAtendio.finAtencion(EstadoLibre, EstadoOcupado);
+            RNDFinAtencion = random.NextDouble();
+            int id = quienAtendio.finAtencionCliente(EstadoLibre, EstadoOcupado, SA, SVA, SVB, reloj, RNDFinAtencion);
+            if (quienAtendio.sosEstadoLibre(EstadoLibre))
+            {
+                RNDFinAtencion = 0f;
+                tiempo = 0f;
+            }
+            verificarTiempoEsperaCliente();
             calcualarTiempoLibreAprendiz();
+            setListaActualCU2(id);
         }
 
+        public void setListaActualCU2(int id)
+        {
+            lista.Add("Fin Atencion cli " + id.ToString());
+            if (reloj > 8 && clienteEnCola == 0)
+            {
+                lista.Add(diaAnterior);
+                diaAnterior += 1;
+                reloj = 0f;
+                tiempoCalcFinAtencion = 0f;
+            }
+            lista.Add(reloj);
+            lista.Add("");
+            lista.Add("");
+            lista.Add("");
+            lista.Add("");
+            lista.Add(tiempoLlegada);
+            lista.Add(RNDFinAtencion);
+            lista.Add(tiempo);
+            lista.Add(Aprendiz.getFinAtencion());
+            lista.Add(VeteranoA.getFinAtencion());
+            lista.Add(VeteranoB.getFinAtencion());
+            lista.Add(Aprendiz.getNombreEstado);
+            lista.Add(Aprendiz.clientesEnCola);
+            lista.Add(VeteranoA.getNombreEstado);
+            lista.Add(VeteranoA.clientesEnCola);
+            lista.Add(VeteranoB.getNombreEstado);
+            lista.Add(VeteranoB.clientesEnCola);
+
+            lista.Add(Aprendiz.getTiempoLibre());
+            lista.Add(colaMax);
+
+            List<Cliente> clientesAprendiz = Aprendiz.getClientes();
+            List<Cliente> clientesVeteranoA = VeteranoA.getClientes();
+            List<Cliente> clientesVeteranoB = VeteranoB.getClientes();
+
+            clientesEnElSistema.AddRange(clientesAprendiz);
+            clientesEnElSistema.AddRange(clientesVeteranoA);
+            clientesEnElSistema.AddRange(clientesVeteranoB);
+
+            foreach (Cliente cliente in clientesEnElSistema)
+            {
+                lista.Add((int)cliente.getId());
+                lista.Add((string)cliente.getNombreEstado());
+                lista.Add((float)cliente.getTiempoLlegada());
+                lista.Add((float)cliente.getTiempoEspera());
+            }
+
+            addListaMatriz(lista);
+        }
         public void verQuePeluquero() 
         {
-            float finAtencionA = Aprendiz.getFinAtencion();
-            float finAtencionVA = VeteranoA.getFinAtencion();
-            float finAtencionVB = VeteranoB.getFinAtencion();
+            float finAtencionA = (float)Aprendiz.getFinAtencion();
+            float finAtencionVA = (float)VeteranoA.getFinAtencion();
+            float finAtencionVB = (float)VeteranoB.getFinAtencion();
 
             if (finAtencionA < finAtencionVA)
             {
@@ -114,18 +187,18 @@ namespace WinFormsApp1
                 }
                 else
                 {
-                    quienAtiendio = VeteranoB;
+                    quienAtendio = VeteranoB;
                 }
             }
             else
             {
                 if (finAtencionVA < finAtencionVB)
                 {
-                    quienAtiendio = VeteranoA;
+                    quienAtendio = VeteranoA;
                 }
                 else
                 {
-                    quienAtiendio = VeteranoB;
+                    quienAtendio = VeteranoB;
                 }
             }
         }
@@ -186,7 +259,6 @@ namespace WinFormsApp1
             if (tiempoLlegada != 0)
             {
                 lista.Add(tiempoLlegada);
-                tiempoLlegada = 0f;
             }
             else
             {
@@ -224,11 +296,14 @@ namespace WinFormsApp1
                 lista.Add((float)cliente.getTiempoLlegada());
                 lista.Add((float)cliente.getTiempoEspera());
             }
+
+            addListaMatriz(lista);
         }
 
-        public void borrarVariable() { }
-
-        public void addListaMatriz() { }
+        public void addListaMatriz(List<Object> lista)
+        {
+            MatrizMostrar.Add(lista);
+        }
 
         public void setProxtiempoLlegada(float tiempoLlegada) { }
 
