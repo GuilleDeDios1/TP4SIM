@@ -12,6 +12,7 @@ namespace WinFormsApp1
         }
 
         private Random random = new Random();
+        
         //estados
         private Estado EA = new Estado("EA");
         private Estado SA = new Estado("SA");
@@ -52,6 +53,9 @@ namespace WinFormsApp1
         private float desdeClient;
         private float hastaClient;
 
+        //datos Fin Atencion
+        private Peluquero quienAtendio;
+
         //tiempo
         private float reloj = 0;
         private float relojAnterior = 0;
@@ -89,9 +93,42 @@ namespace WinFormsApp1
             setlistaActual();
         }
 
-        public void finAtencion() { }
+        public void finAtencion()
+        {
+            verQuePeluquero();
+            quienAtendio.finAtencion(EstadoLibre, EstadoOcupado);
+            calcualarTiempoLibreAprendiz();
+        }
 
-        public void verQuePeluquero() { }
+        public void verQuePeluquero() 
+        {
+            float finAtencionA = Aprendiz.getFinAtencion();
+            float finAtencionVA = VeteranoA.getFinAtencion();
+            float finAtencionVB = VeteranoB.getFinAtencion();
+
+            if (finAtencionA < finAtencionVA)
+            {
+                if (finAtencionA < finAtencionVB)
+                {
+                    quienAtendio = Aprendiz;
+                }
+                else
+                {
+                    quienAtiendio = VeteranoB;
+                }
+            }
+            else
+            {
+                if (finAtencionVA < finAtencionVB)
+                {
+                    quienAtiendio = VeteranoA;
+                }
+                else
+                {
+                    quienAtiendio = VeteranoB;
+                }
+            }
+        }
 
         public void calcualarTiempoLibreAprendiz() {
             Aprendiz.calcularTiempoLibre(reloj,EstadoLibre,relojAnterior);
@@ -187,11 +224,6 @@ namespace WinFormsApp1
                 lista.Add((float)cliente.getTiempoLlegada());
                 lista.Add((float)cliente.getTiempoEspera());
             }
-
-
-
-
-
         }
 
         public void borrarVariable() { }
@@ -233,6 +265,7 @@ namespace WinFormsApp1
 
 
         }
+
         public void calcularColaMax() {
             int colaApren = Aprendiz.clientesEnCola();
             int colaVeteranoA = VeteranoA.clientesEnCola();
@@ -251,8 +284,6 @@ namespace WinFormsApp1
             clienteEnCola = colaApren + colaVeteranoA + colaVeteranoB;
         }
 
-
-
         public void calcularTiempoLlegada()
         {
             //Llegada
@@ -260,6 +291,5 @@ namespace WinFormsApp1
             tiempo = ((hastaClient - desdeClient) * (float) RNDLlegada + desdeClient);
             tiempoLlegada = reloj + tiempo;
         }
-
     }
 }

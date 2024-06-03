@@ -44,8 +44,22 @@ namespace WinFormsApp1.Clases
             return false;
         }
 
-        public void setEstadoSA(Estado estado) {
-        
+        public void setEstadoSA(Estado SA)
+        {
+            this.estadoAnterior = this.estado;
+            this.estado = SA;
+        }
+
+        public void setEstadoSVA(Estado SVA)
+        {
+            this.estadoAnterior = this.estado;
+            this.estado = SVA;
+        }
+
+        public void setEstadoSVB(Estado SVB)
+        {
+            this.estadoAnterior = this.estado;
+            this.estado = SVB;
         }
 
         internal int getId()

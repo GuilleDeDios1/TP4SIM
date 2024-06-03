@@ -32,11 +32,39 @@ namespace WinFormsApp1.Clases
             this.tiempoLibre = 0;
         }
 
-        public void cambiarCliente() { }
+        public void finAtencion(Estado Libre, Estado Ocupado) 
+        {
+            int colaAtencion = this.clientesEnCola();
+            
+            if(colaAtencion == 0)
+            {
+                this.setEstadoLibre(Libre);
+            }
+            else
+            {
+                this.setEstadoOcupado(Ocupado);
+                cambiarEstadoCliente(cola[0], SA, SVA, SVB);
+                clienteAtendiendo = cola[0]
+                cola.Remove(cola[0]);
+            }
 
-        public void verificarCola() { }
+        }
 
-        public void cambiarEstadoCliente() { }
+        public void cambiarEstadoCliente(Cliente cliente, Estado SA, Estado SVA, Estado SVB)
+        { 
+            if(this.nombre == "Aprendiz")
+            {
+                cliente.setEstadoSA(SA);
+            }
+            if(this.nombre == "VeteranoA")
+            {
+                cliente.setEstadoSVA(SVA);
+            }
+            if(this.nombre == "VeteranoB")
+            {
+                cliente.setEstadoSVB(SVB);
+            }
+        }
 
         public void setClienteAtendiendo() { }
 
@@ -128,6 +156,12 @@ namespace WinFormsApp1.Clases
         public string getNombreEstado() {
             return this.estado.getNombre();
         }
+
+        public void setEstadoLibre(Estado Libre)
+        {
+            this.estadoAnterior = this.estado;
+            this.estado = Libre;
+        };
 
         internal object getFinAtencion()
         {
