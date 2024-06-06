@@ -1,6 +1,6 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
-using WinFormsApp1.Clases;
 
 namespace WinFormsApp1
 {
@@ -15,384 +15,352 @@ namespace WinFormsApp1
 
         int filaMax = 0;
         
-        //estados
-        private Estado EA = new Estado("EA");
-        private Estado SA = new Estado("SA");
-        private Estado EVA = new Estado("EVA");
-        private Estado SVA = new Estado("SVA");
-        private Estado EVB = new Estado("EVB");
-        private Estado SVB = new Estado("SVB");
-        private Estado EstadoLibre = new Estado("Libre");
-        private Estado EstadoOcupado = new Estado("Ocupado");
-        
-        //peluqueros
-        private Peluquero Aprendiz;
-        private Peluquero VeteranoA;
-        private Peluquero VeteranoB;
-        private float probAprendiz;
-        private float probVeteranoA;
-        private float probVeteranoB;
-
-        private double RNDFinAtencion;
-        private float tiempoCalcFinAtencion;
-        private List<Cliente> clientesEnElSistema = new List<Cliente>();
-
         //estadisticas
         private int colaMax = 0;
 
-
         //para mostrar
         private List<Object> lista = new List<object>();
+        private List<Object> listaAnterior = new List<object>();
         private List<List<Object>> MatrizMostrar = new List<List<object>>();
 
         //datosLlegadaCliente
-        private double RNDAtencion = 0;
-        private string quienAtiende = "";
-        private double RNDLlegada = 0;
-        private float tiempo = 0;
-        private float tiempoLlegada = 0;
+        private int desdeClient;
+        private int hastaClient;
 
-        private float desdeClient;
-        private float hastaClient;
+        private int desdeAprendiz;
+        private int hastaAprendiz;
+        private float probAprendiz;
 
-        //datos Fin Atencion
-        private Peluquero quienAtendio;
+        private int desdeVeterarnoA;
+        private int hastaVeterarnoA;
+        private float probVeteranoA;
 
-        //tiempo
-        private float reloj = 0;
-        private float relojAnterior = 0;
-        private int clienteEnCola = 0;
-        private int diaAnterior = 0;
+        private int desdeVeterarnoB;
+        private int hastaVeterarnoB;
+        private float probVeteranoB;
+
+        private float timmpoSimu;
+        private float desdeItera;
+        private float hastaItera;
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-            
-        }
-
-        public void llegadaCliente ()
-        {
-            calcularTiempoLlegada();
-            crearCliente();
-            verificarTiempoEsperaCliente();
-            calcualarTiempoLibreAprendiz();
-            calcularColaMax();
-            setlistaActual();
-        }
-
-        public void finAtencion()
-        {
-            verQuePeluquero();
-            RNDFinAtencion = random.NextDouble();
-            int id = quienAtendio.finAtencionCliente(EstadoLibre, EstadoOcupado, SA, SVA, SVB, reloj, RNDFinAtencion);
-            if (quienAtendio.sosEstadoLibre(EstadoLibre))
-            {
-                RNDFinAtencion = 0f;
-                tiempo = 0f;
-            }
-            verificarTiempoEsperaCliente();
-            calcualarTiempoLibreAprendiz();
-            setListaActualCU2(id);
-        }
-
-        public void setListaActualCU2(int id)
-        {
-            lista.Add("Fin Atencion cli " + id.ToString());
-            if (reloj > 8 && clienteEnCola == 0)
-            {
-                lista.Add(diaAnterior);
-                diaAnterior += 1;
-                reloj = 0f;
-                tiempoCalcFinAtencion = 0f;
-            }
-            lista.Add(reloj);
-            lista.Add("");
-            lista.Add("");
-            lista.Add("");
-            lista.Add("");
-            lista.Add(tiempoLlegada);
-            lista.Add(RNDFinAtencion);
-            lista.Add(tiempo);
-            lista.Add(Aprendiz.getFinAtencion());
-            lista.Add(VeteranoA.getFinAtencion());
-            lista.Add(VeteranoB.getFinAtencion());
-            lista.Add(Aprendiz.getNombreEstado);
-            lista.Add(Aprendiz.clientesEnCola);
-            lista.Add(VeteranoA.getNombreEstado);
-            lista.Add(VeteranoA.clientesEnCola);
-            lista.Add(VeteranoB.getNombreEstado);
-            lista.Add(VeteranoB.clientesEnCola);
-
-            lista.Add(Aprendiz.getTiempoLibre());
-            lista.Add(colaMax);
-
-            List<Cliente> clientesAprendiz = Aprendiz.getClientes();
-            List<Cliente> clientesVeteranoA = VeteranoA.getClientes();
-            List<Cliente> clientesVeteranoB = VeteranoB.getClientes();
-
-            clientesEnElSistema.AddRange(clientesAprendiz);
-            clientesEnElSistema.AddRange(clientesVeteranoA);
-            clientesEnElSistema.AddRange(clientesVeteranoB);
-
-            foreach (Cliente cliente in clientesEnElSistema)
-            {
-                lista.Add((int)cliente.getId());
-                lista.Add((string)cliente.getNombreEstado());
-                lista.Add((float)cliente.getTiempoLlegada());
-                lista.Add((float)cliente.getTiempoEspera());
-            }
-
-            addListaMatriz(lista);
-        }
-        public void verQuePeluquero() 
-        {
-            float finAtencionA = (float)Aprendiz.getFinAtencion();
-            float finAtencionVA = (float)VeteranoA.getFinAtencion();
-            float finAtencionVB = (float)VeteranoB.getFinAtencion();
-
-            if (finAtencionA < finAtencionVA)
-            {
-                if (finAtencionA < finAtencionVB)
-                {
-                    quienAtendio = Aprendiz;
-                }
-                else
-                {
-                    quienAtendio = VeteranoB;
-                }
-            }
-            else
-            {
-                if (finAtencionVA < finAtencionVB)
-                {
-                    quienAtendio = VeteranoA;
-                }
-                else
-                {
-                    quienAtendio = VeteranoB;
-                }
-            }
-        }
-
-        public void calcualarTiempoLibreAprendiz() {
-            Aprendiz.calcularTiempoLibre(reloj,EstadoLibre,relojAnterior);
-        }
-
-        public void verificarTiempoEsperaCliente() {
-            Aprendiz.tenesClientesTiempoMayor(reloj);
-            VeteranoA.tenesClientesTiempoMayor(reloj);
-            VeteranoB.tenesClientesTiempoMayor(reloj);
-        }
-
-        public void setlistaActual() {
-            lista.Add("Llegada");
-            if (reloj > 8 && clienteEnCola == 0) {
-                lista.Add(diaAnterior);
-                diaAnterior += 1;
-                reloj = 0f;
-            }
-            lista.Add(reloj);
-            if (RNDAtencion != 0)
-            {
-                lista.Add(RNDAtencion);
-                RNDAtencion = 0f;
-            }
-            else {
-                lista.Add("");
-            }
-            if (quienAtiende != "")
-            {
-                lista.Add(quienAtiende);
-                quienAtiende = "";
-            }
-            else
-            {
-                lista.Add("");
-            }
-            if (RNDLlegada != 0)
-            {
-                lista.Add(RNDLlegada);
-                RNDLlegada = 0f;
-            }
-            else
-            {
-                lista.Add("");
-            }
-            if (tiempo != 0)
-            {
-                lista.Add(tiempo);
-                tiempo = 0f;
-            }
-            else
-            {
-                lista.Add("");
-            }
-            if (tiempoLlegada != 0)
-            {
-                lista.Add(tiempoLlegada);
-            }
-            else
-            {
-                lista.Add("");
-            }
-            lista.Add(RNDFinAtencion);
-            RNDFinAtencion = 0f;
-            lista.Add(tiempoCalcFinAtencion);
-            tiempoCalcFinAtencion = 0f;
-            lista.Add(Aprendiz.getFinAtencion());
-            lista.Add(VeteranoA.getFinAtencion());
-            lista.Add(VeteranoB.getFinAtencion());
-
-            lista.Add(Aprendiz.getNombreEstado);
-            lista.Add(Aprendiz.clientesEnCola);
-            lista.Add(VeteranoA.getNombreEstado);
-            lista.Add(VeteranoA.clientesEnCola);
-            lista.Add(VeteranoB.getNombreEstado);
-            lista.Add(VeteranoB.clientesEnCola);
-
-            lista.Add(Aprendiz.getTiempoLibre());
-            lista.Add(colaMax);
-
-            List<Cliente> clientesAprendiz = Aprendiz.getClientes();
-            List<Cliente> clientesVeteranoA = VeteranoA.getClientes();
-            List<Cliente> clientesVeteranoB = VeteranoB.getClientes();
-            
-            clientesEnElSistema.AddRange(clientesAprendiz);
-            clientesEnElSistema.AddRange(clientesVeteranoA);
-            clientesEnElSistema.AddRange(clientesVeteranoB);
-
-            foreach (Cliente cliente in clientesEnElSistema) {
-                lista.Add((int)cliente.getId());
-                lista.Add((string)cliente.getNombreEstado());
-                lista.Add((float)cliente.getTiempoLlegada());
-                lista.Add((float)cliente.getTiempoEspera());
-            }
-
-            addListaMatriz(lista);
-        }
-
-        public void addListaMatriz(List<Object> lista)
-        {
-            if (filaMax < lista.Count) {
-                filaMax = lista.Count;
-            }
-            MatrizMostrar.Add(lista);
-        }
-
-        public void setProxtiempoLlegada(float tiempoLlegada) { }
-
-        public void crearCliente() {
-            // Generar un número aleatorio entre 0 y 1
-            RNDAtencion = random.NextDouble();
-
-
-            // Tomar acciones basadas en el valor aleatorio
-            if (RNDAtencion < probAprendiz)
-            {
-                // Acción para el aprendiz
-                quienAtiende = "Aprendiz";
-                Object[] ArrayfinAtencion = Aprendiz.crearCliente(reloj,EstadoLibre,EstadoOcupado,SA,EA);
-                RNDFinAtencion = (float)ArrayfinAtencion[0];
-                tiempo = (float)ArrayfinAtencion[1];
-                tiempoCalcFinAtencion = (float)ArrayfinAtencion[2];
-            }
-            else if (RNDAtencion < probAprendiz + probVeteranoA)
-            {
-                // Acción para el veterano A
-                quienAtiende = "VeteranoA";
-                Object[] ArrayfinAtencion = VeteranoA.crearCliente(reloj, EstadoLibre, EstadoOcupado, SVA, EVA);
-                RNDFinAtencion = (float)ArrayfinAtencion[0];
-                tiempo = (float)ArrayfinAtencion[1];
-                tiempoCalcFinAtencion = (float)ArrayfinAtencion[2];
-            }
-            else if (RNDAtencion < probAprendiz + probVeteranoA + probVeteranoB)
-            {
-                // Acción para el veterano B
-                quienAtiende = "VeteranoB";
-                Object[] ArrayfinAtencion = VeteranoB.crearCliente(reloj, EstadoLibre, EstadoOcupado, SVB, EVB);
-                RNDFinAtencion = (float)ArrayfinAtencion[0];
-                tiempo = (float)ArrayfinAtencion[1];
-                tiempoCalcFinAtencion = (float)ArrayfinAtencion[2];
-            }
-
 
         }
-
-        public void calcularColaMax() {
-            int colaApren = Aprendiz.clientesEnCola();
-            int colaVeteranoA = VeteranoA.clientesEnCola();
-            int colaVeteranoB = VeteranoB.clientesEnCola();
-            if (colaApren > colaMax) {
-                colaMax = colaApren;
-            }
-            if (colaVeteranoA > colaMax)
-            {
-                colaMax = colaVeteranoA;
-            }
-            if (colaVeteranoB > colaMax)
-            {
-                colaMax = colaVeteranoB;
-            }
-            clienteEnCola = colaApren + colaVeteranoA + colaVeteranoB;
-        }
-
-        public void calcularTiempoLlegada()
-        {
-            //Llegada
-            RNDLlegada = random.NextDouble();
-            tiempo = ((hastaClient - desdeClient) * (float) RNDLlegada + desdeClient);
-            tiempoLlegada = reloj + tiempo;
-        }
-
         private void btnGenerar_Click(object sender, EventArgs e)
         {
-            int desdeAprendiz = (int)txtDesdeAprendiz.Value;
-            int hastaAprendiz = (int)txtHastaAprendiz.Value;
+            desdeAprendiz = (int)txtDesdeAprendiz.Value;
+            hastaAprendiz = (int)txtHastaAprendiz.Value;
             probAprendiz = float.Parse(txtProbApren.Text);
 
-            int desdeVeterarnoA = (int)txtDesdeVeterA.Value;
-            int hastaVeterarnoA = (int)txtHastaVeterA.Value;
+            desdeVeterarnoA = (int)txtDesdeVeterA.Value;
+            hastaVeterarnoA = (int)txtHastaVeterA.Value;
             probVeteranoA = float.Parse(txtProbVeterA.Text);
 
-            int desdeVeterarnoB = (int)txtDesdeVeterB.Value;
-            int hastaVeterarnoB = (int)txtHastaVeterB.Value;
+            desdeVeterarnoB = (int)txtDesdeVeterB.Value;
+            hastaVeterarnoB = (int)txtHastaVeterB.Value;
             probVeteranoB = float.Parse(txtProbVeterB.Text);
 
-            Aprendiz = new Peluquero(desdeAprendiz, hastaAprendiz, EstadoLibre);
-            VeteranoA = new Peluquero(desdeVeterarnoA, hastaVeterarnoA, EstadoLibre);
-            VeteranoB = new Peluquero(desdeVeterarnoB, hastaVeterarnoB, EstadoLibre);
 
             desdeClient = (int)txtDesdeCliente.Value;
             hastaClient = (int)txtHastaCliente.Value;
 
-            
-            while(true)
+            timmpoSimu = ((float)txtTiempoSumu.Value)*60;
+
+            desdeItera = (float)txtDesdeItera.Value;
+
+            hastaItera = (float)txtHastaItera.Value;
+
+            simular();
+        }
+
+        public void simular()
+        {
+            bool incrementarColaApre = false;
+            bool incrementarColaVeteA = false;
+            bool incrementarColaVeteB = false;
+            bool decrementaColaApre = false;
+            bool decrementaColaVeteA = false;
+            bool decrementaColaVeteB = false;
+            bool vanderaLlenoLlegadaCliente = false;
+            for(int i = 0; i< (desdeItera + hastaItera);i++)
             {
-                if (reloj > (diaAnterior*1440)+(float)txtTiempoSumu.Value)
+                //agrega evento
+                if(i == 0)
                 {
-                    Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
-                    mostrar.Show();
-                    this.Hide();
+                    lista.Add("Inicializar");
                 }
-                if ((float)Aprendiz.getFinAtencion() == 0f && (float)VeteranoA.getFinAtencion() == 0f && (float)VeteranoB.getFinAtencion() == 0f)
+                //agrega evento
+                else
                 {
-                    llegadaCliente();
-                }
-                else {
-                    if (tiempoLlegada < (float)Aprendiz.getFinAtencion() || tiempoLlegada < (float)VeteranoA.getFinAtencion() || tiempoLlegada < (float)VeteranoB.getFinAtencion())
+                    //para llegadaCliente
+                    if ((float)listaAnterior[7] < (float)listaAnterior[10] && (float)listaAnterior[7] < (float)listaAnterior[11] && (float)listaAnterior[7] < (float)listaAnterior[12])
                     {
-                        reloj += tiempoLlegada;
-                        llegadaCliente();
+                        lista.Add("LlegadaCliente");
+                    }
+                    //Para Fin Atencion
+                    else
+                    {
+                        lista.Add("FinAtencion");
+                    }
+                }
+                //reloj dia
+                if (i == 0)
+                {
+                    lista.Add(0);
+                }
+                else
+                {
+                    //controlar minutos del anterior
+                    if ((int)listaAnterior[2] > 480 && (int)listaAnterior[14] == 0 && (int)listaAnterior[16] == 0 && (int)listaAnterior[18] == 0)
+                    {
+                        lista.Add((int)listaAnterior[1] + 1);
+                    }
+                }
+                //reloj minutos
+                if (i == 0)
+                {
+                    lista.Add(0f);
+                }
+                else
+                {
+                    //verifica en la lista anterior cual es el menor tiempo
+                    if ((float)listaAnterior[7] < (float)listaAnterior[10] && (float)listaAnterior[7] < (float)listaAnterior[11] && (float)listaAnterior[7] < (float)listaAnterior[12]) 
+                    {
+                        lista.Add((float)listaAnterior[7]);
                     }
                     else
                     {
-                        reloj += tiempoCalcFinAtencion;
-                        finAtencion();
+                        if ((float)listaAnterior[10] <= (float)listaAnterior[11] && (float)listaAnterior[10] <= (float)listaAnterior[12])
+                        {
+                            lista.Add((float)listaAnterior[10]);
+                        }
+                        else if ((float)listaAnterior[11] <= (float)listaAnterior[10] && (float)listaAnterior[11] <= (float)listaAnterior[12])
+                        {
+                            lista.Add((float)listaAnterior[11]);
+                        }
+                        else
+                        {
+                            lista.Add((float)listaAnterior[12]);
+                        } 
                     }
                 }
-                
-            }
 
+                //RNDLlegadaCliente
+                if(i == 0)
+                {
+                    lista.Add(0);
+                }
+                else
+                {
+                    //para llegadaCliente
+                    if ((float)listaAnterior[7] < (float)listaAnterior[10] && (float)listaAnterior[7] < (float)listaAnterior[11] && (float)listaAnterior[7] < (float)listaAnterior[12])
+                    {
+                        float randomQuienAtiende = (float) random.NextDouble();
+                        lista.Add(randomQuienAtiende);
+                        if (randomQuienAtiende < probAprendiz)
+                        {
+                            lista.Add("Aprendiz");
+                        }
+                        else {
+                            if (randomQuienAtiende < probAprendiz + probVeteranoA)
+                            {
+                                lista.Add("VeteranoA");
+                            }
+                            else
+                            {
+                                if (randomQuienAtiende < probAprendiz + probVeteranoA + probVeteranoB)
+                                {
+                                    lista.Add("VeteranoB");
+                                }
+                            }
+                        }
+                    }
+                    //Para Fin Atencion
+                    else
+                    {
+                        if((int)listaAnterior[14] == 0 && (int)listaAnterior[16] == 0 && (int)listaAnterior[18] == 0)
+                        {
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(listaAnterior[7]);
+                            vanderaLlenoLlegadaCliente = true;
+                        }
+                    }
+                }
+                //RNDTiempoLlegada
+                if (!vanderaLlenoLlegadaCliente)
+                {
+                    float randomTiempoLlegada = (float)random.NextDouble();
+                    lista.Add(randomTiempoLlegada);
+                    float tiempo = desdeClient + randomTiempoLlegada * (hastaClient - desdeClient);
+                    lista.Add(tiempo);
+                    lista.Add(tiempo + (float)lista[2]);
+                }
+                //finAtencion
+                if(i == 0)
+                {
+                    lista.Add(0);
+                    lista.Add(0);
+                    lista.Add(0);
+                    lista.Add(0);
+                    lista.Add(0);
+                }
+                else
+                {
+                    //ve si es llegada de cliente
+                    if ((float)listaAnterior[7] < (float)listaAnterior[10] && (float)listaAnterior[7] < (float)listaAnterior[11] && (float)listaAnterior[7] < (float)listaAnterior[12])
+                    {
+                        //controla si no hay gente en cola
+                        if(lista[4] == "Aprendiz" && (string)listaAnterior[13] == "Libre") {
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeAprendiz + randomFinAtencion * (hastaAprendiz - desdeAprendiz);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+
+                        }
+                        if(lista[4] == "VeteranoA"&& (string)listaAnterior[15] == "Libre"){
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeVeterarnoA + randomFinAtencion * (hastaVeterarnoA - desdeVeterarnoA);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                        }
+                        if(lista[4] == "VeteranoB" && (string)listaAnterior[17] == "Libre") {
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB - desdeVeterarnoB);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            lista.Add(listaAnterior[12]);
+                        }
+                        //si hay cola
+                        if (lista[4] == "Aprendiz" && (string)listaAnterior[13] == "Ocupado")
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                            incrementarColaApre = true;
+
+                        }
+                        if (lista[4] == "VeteranoA" && (string)listaAnterior[15] == "Ocupado")
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                            incrementarColaVeteA = true;
+                        }
+                        if (lista[4] == "VeteranoB" && (string)listaAnterior[17] == "Ocupado")
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                            incrementarColaVeteB = true;
+                        }
+
+
+                    }
+                    //ve si es fin de atencion
+                    else
+                    {
+                        //No hay cola
+                        if ((int)listaAnterior[14] == 0 && lista[4] == "Aprendiz")
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                        }
+                        if ((int)listaAnterior[16] == 0 && lista[4] == "VeteranoA")
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                        }
+                        if ((int)listaAnterior[18] == 0 && lista[4] == "VeteranoB")
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                        }
+                        //Hay cola
+                        if ((int)listaAnterior[14] != 0 && lista[4] == "Aprendiz")
+                        {
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeAprendiz + randomFinAtencion * (hastaAprendiz - desdeAprendiz);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            decrementaColaApre = true;
+                        }
+                        if ((int)listaAnterior[16] != 0 && lista[4] == "VeteranoA")
+                        {
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeVeterarnoA + randomFinAtencion * (hastaVeterarnoA - desdeVeterarnoA);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                            decrementaColaVeteA = true;
+                        }
+                        if ((int)listaAnterior[18] != 0 && lista[4] == "VeteranoB")
+                        {
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB - desdeVeterarnoB);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            lista.Add(listaAnterior[12]);
+                            decrementaColaVeteB = true;
+                        }
+                    }
+                }
+                //Objetos permantes
+                if (i == 0)
+                {
+                    lista.Add("Libre");
+                    lista.Add(0);
+                    lista.Add("Libre");
+                    lista.Add(0);
+                    lista.Add("Libre");
+                    lista.Add(0);
+                }
+                else
+                {
+                    if (listaAnterior[13] == "Libre")
+                    {
+                        lista.Add("Ocupado");
+                    }
+                    else
+                    {
+                       
+                    }
+                }
+            }
         }
     }
 }
