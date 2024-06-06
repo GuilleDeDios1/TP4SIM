@@ -29,6 +29,21 @@
         private void InitializeComponent()
         {
             this.gbPeluqueros = new System.Windows.Forms.GroupBox();
+            this.txtProbVeterB = new System.Windows.Forms.TextBox();
+            this.txtProbApren = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtHastaVeterB = new System.Windows.Forms.NumericUpDown();
+            this.txtHastaVeterA = new System.Windows.Forms.NumericUpDown();
+            this.txtHastaAprendiz = new System.Windows.Forms.NumericUpDown();
+            this.txtDesdeVeterB = new System.Windows.Forms.NumericUpDown();
+            this.txtDesdeVeterA = new System.Windows.Forms.NumericUpDown();
+            this.txtDesdeAprendiz = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.txtTiempoSumu = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,22 +51,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtHastaItera = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtDesdeAprendiz = new System.Windows.Forms.NumericUpDown();
-            this.txtDesdeVeterA = new System.Windows.Forms.NumericUpDown();
-            this.txtDesdeVeterB = new System.Windows.Forms.NumericUpDown();
-            this.txtHastaAprendiz = new System.Windows.Forms.NumericUpDown();
-            this.txtHastaVeterA = new System.Windows.Forms.NumericUpDown();
-            this.txtHastaVeterB = new System.Windows.Forms.NumericUpDown();
-            this.txtProbApren = new System.Windows.Forms.NumericUpDown();
-            this.txtProbVeterA = new System.Windows.Forms.NumericUpDown();
-            this.txtProbVeterB = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -60,20 +59,18 @@
             this.txtDesdeCliente = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.btnGenerar = new System.Windows.Forms.Button();
+            this.txtProbVeterA = new System.Windows.Forms.TextBox();
             this.gbPeluqueros.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHastaAprendiz)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeAprendiz)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTiempoSumu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeItera)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaItera)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeAprendiz)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterA)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHastaAprendiz)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterA)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtProbApren)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtProbVeterA)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtProbVeterB)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaCliente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeCliente)).BeginInit();
@@ -81,13 +78,13 @@
             // 
             // gbPeluqueros
             // 
+            this.gbPeluqueros.Controls.Add(this.txtProbVeterB);
+            this.gbPeluqueros.Controls.Add(this.txtProbVeterA);
+            this.gbPeluqueros.Controls.Add(this.txtProbApren);
             this.gbPeluqueros.Controls.Add(this.label10);
             this.gbPeluqueros.Controls.Add(this.label9);
             this.gbPeluqueros.Controls.Add(this.label8);
             this.gbPeluqueros.Controls.Add(this.label7);
-            this.gbPeluqueros.Controls.Add(this.txtProbVeterB);
-            this.gbPeluqueros.Controls.Add(this.txtProbVeterA);
-            this.gbPeluqueros.Controls.Add(this.txtProbApren);
             this.gbPeluqueros.Controls.Add(this.txtHastaVeterB);
             this.gbPeluqueros.Controls.Add(this.txtHastaVeterA);
             this.gbPeluqueros.Controls.Add(this.txtHastaAprendiz);
@@ -104,12 +101,168 @@
             this.gbPeluqueros.TabStop = false;
             this.gbPeluqueros.Text = "Peluqueros";
             // 
+            // txtProbVeterB
+            // 
+            this.txtProbVeterB.Location = new System.Drawing.Point(233, 130);
+            this.txtProbVeterB.Name = "txtProbVeterB";
+            this.txtProbVeterB.Size = new System.Drawing.Size(43, 23);
+            this.txtProbVeterB.TabIndex = 19;
+            this.txtProbVeterB.Text = "0.50";
+            // 
+            // txtProbApren
+            // 
+            this.txtProbApren.Location = new System.Drawing.Point(233, 57);
+            this.txtProbApren.Name = "txtProbApren";
+            this.txtProbApren.Size = new System.Drawing.Size(43, 23);
+            this.txtProbApren.TabIndex = 17;
+            this.txtProbApren.Text = "0.25";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(139, 19);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(52, 15);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "Distr Uni";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(233, 39);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 15);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Prob";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(175, 39);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 15);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Hasta";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(112, 39);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 15);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Desde";
+            // 
+            // txtHastaVeterB
+            // 
+            this.txtHastaVeterB.Location = new System.Drawing.Point(175, 130);
+            this.txtHastaVeterB.Name = "txtHastaVeterB";
+            this.txtHastaVeterB.Size = new System.Drawing.Size(43, 23);
+            this.txtHastaVeterB.TabIndex = 9;
+            this.txtHastaVeterB.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // txtHastaVeterA
+            // 
+            this.txtHastaVeterA.Location = new System.Drawing.Point(175, 92);
+            this.txtHastaVeterA.Name = "txtHastaVeterA";
+            this.txtHastaVeterA.Size = new System.Drawing.Size(43, 23);
+            this.txtHastaVeterA.TabIndex = 8;
+            this.txtHastaVeterA.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            // 
+            // txtHastaAprendiz
+            // 
+            this.txtHastaAprendiz.Location = new System.Drawing.Point(175, 57);
+            this.txtHastaAprendiz.Name = "txtHastaAprendiz";
+            this.txtHastaAprendiz.Size = new System.Drawing.Size(43, 23);
+            this.txtHastaAprendiz.TabIndex = 7;
+            this.txtHastaAprendiz.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            // 
+            // txtDesdeVeterB
+            // 
+            this.txtDesdeVeterB.Location = new System.Drawing.Point(112, 130);
+            this.txtDesdeVeterB.Name = "txtDesdeVeterB";
+            this.txtDesdeVeterB.Size = new System.Drawing.Size(43, 23);
+            this.txtDesdeVeterB.TabIndex = 6;
+            this.txtDesdeVeterB.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            // 
+            // txtDesdeVeterA
+            // 
+            this.txtDesdeVeterA.Location = new System.Drawing.Point(112, 92);
+            this.txtDesdeVeterA.Name = "txtDesdeVeterA";
+            this.txtDesdeVeterA.Size = new System.Drawing.Size(43, 23);
+            this.txtDesdeVeterA.TabIndex = 4;
+            this.txtDesdeVeterA.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            // 
+            // txtDesdeAprendiz
+            // 
+            this.txtDesdeAprendiz.Location = new System.Drawing.Point(112, 57);
+            this.txtDesdeAprendiz.Name = "txtDesdeAprendiz";
+            this.txtDesdeAprendiz.Size = new System.Drawing.Size(43, 23);
+            this.txtDesdeAprendiz.TabIndex = 3;
+            this.txtDesdeAprendiz.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 132);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(63, 15);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Veterano B";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 94);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(64, 15);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Veterano A";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 59);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(54, 15);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Aprendiz";
+            // 
             // txtTiempoSumu
             // 
             this.txtTiempoSumu.Location = new System.Drawing.Point(162, 29);
             this.txtTiempoSumu.Name = "txtTiempoSumu";
             this.txtTiempoSumu.Size = new System.Drawing.Size(120, 23);
             this.txtTiempoSumu.TabIndex = 1;
+            this.txtTiempoSumu.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // label1
             // 
@@ -167,132 +320,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Simulacion";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 59);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 15);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Aprendiz";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 94);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 15);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Veterano A";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 132);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 15);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Veterano B";
-            // 
-            // txtDesdeAprendiz
-            // 
-            this.txtDesdeAprendiz.Location = new System.Drawing.Point(112, 57);
-            this.txtDesdeAprendiz.Name = "txtDesdeAprendiz";
-            this.txtDesdeAprendiz.Size = new System.Drawing.Size(43, 23);
-            this.txtDesdeAprendiz.TabIndex = 3;
-            // 
-            // txtDesdeVeterA
-            // 
-            this.txtDesdeVeterA.Location = new System.Drawing.Point(112, 92);
-            this.txtDesdeVeterA.Name = "txtDesdeVeterA";
-            this.txtDesdeVeterA.Size = new System.Drawing.Size(43, 23);
-            this.txtDesdeVeterA.TabIndex = 4;
-            // 
-            // txtDesdeVeterB
-            // 
-            this.txtDesdeVeterB.Location = new System.Drawing.Point(112, 130);
-            this.txtDesdeVeterB.Name = "txtDesdeVeterB";
-            this.txtDesdeVeterB.Size = new System.Drawing.Size(43, 23);
-            this.txtDesdeVeterB.TabIndex = 6;
-            // 
-            // txtHastaAprendiz
-            // 
-            this.txtHastaAprendiz.Location = new System.Drawing.Point(175, 57);
-            this.txtHastaAprendiz.Name = "txtHastaAprendiz";
-            this.txtHastaAprendiz.Size = new System.Drawing.Size(43, 23);
-            this.txtHastaAprendiz.TabIndex = 7;
-            // 
-            // txtHastaVeterA
-            // 
-            this.txtHastaVeterA.Location = new System.Drawing.Point(175, 92);
-            this.txtHastaVeterA.Name = "txtHastaVeterA";
-            this.txtHastaVeterA.Size = new System.Drawing.Size(43, 23);
-            this.txtHastaVeterA.TabIndex = 8;
-            // 
-            // txtHastaVeterB
-            // 
-            this.txtHastaVeterB.Location = new System.Drawing.Point(175, 130);
-            this.txtHastaVeterB.Name = "txtHastaVeterB";
-            this.txtHastaVeterB.Size = new System.Drawing.Size(43, 23);
-            this.txtHastaVeterB.TabIndex = 9;
-            // 
-            // txtProbApren
-            // 
-            this.txtProbApren.Location = new System.Drawing.Point(233, 57);
-            this.txtProbApren.Name = "txtProbApren";
-            this.txtProbApren.Size = new System.Drawing.Size(43, 23);
-            this.txtProbApren.TabIndex = 10;
-            // 
-            // txtProbVeterA
-            // 
-            this.txtProbVeterA.Location = new System.Drawing.Point(233, 94);
-            this.txtProbVeterA.Name = "txtProbVeterA";
-            this.txtProbVeterA.Size = new System.Drawing.Size(43, 23);
-            this.txtProbVeterA.TabIndex = 11;
-            // 
-            // txtProbVeterB
-            // 
-            this.txtProbVeterB.Location = new System.Drawing.Point(233, 130);
-            this.txtProbVeterB.Name = "txtProbVeterB";
-            this.txtProbVeterB.Size = new System.Drawing.Size(43, 23);
-            this.txtProbVeterB.TabIndex = 12;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(112, 39);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(39, 15);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Desde";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(175, 39);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(37, 15);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "Hasta";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(233, 39);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(32, 15);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "Prob";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(139, 19);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(52, 15);
-            this.label10.TabIndex = 16;
-            this.label10.Text = "Distr Uni";
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label11);
@@ -341,6 +368,11 @@
             this.txtHastaCliente.Name = "txtHastaCliente";
             this.txtHastaCliente.Size = new System.Drawing.Size(60, 23);
             this.txtHastaCliente.TabIndex = 19;
+            this.txtHastaCliente.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // txtDesdeCliente
             // 
@@ -348,6 +380,11 @@
             this.txtDesdeCliente.Name = "txtDesdeCliente";
             this.txtDesdeCliente.Size = new System.Drawing.Size(56, 23);
             this.txtDesdeCliente.TabIndex = 18;
+            this.txtDesdeCliente.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
             // 
             // label14
             // 
@@ -366,6 +403,15 @@
             this.btnGenerar.TabIndex = 9;
             this.btnGenerar.Text = "Generar";
             this.btnGenerar.UseVisualStyleBackColor = true;
+            this.btnGenerar.Click += new System.EventHandler(this.btnGenerar_Click);
+            // 
+            // txtProbVeterA
+            // 
+            this.txtProbVeterA.Location = new System.Drawing.Point(233, 92);
+            this.txtProbVeterA.Name = "txtProbVeterA";
+            this.txtProbVeterA.Size = new System.Drawing.Size(43, 23);
+            this.txtProbVeterA.TabIndex = 18;
+            this.txtProbVeterA.Text = "0.25";
             // 
             // Form1
             // 
@@ -381,20 +427,17 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.gbPeluqueros.ResumeLayout(false);
             this.gbPeluqueros.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHastaAprendiz)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeAprendiz)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTiempoSumu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeItera)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaItera)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeAprendiz)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHastaAprendiz)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtProbApren)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtProbVeterA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtProbVeterB)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaCliente)).EndInit();
@@ -417,9 +460,6 @@
         private Label label9;
         private Label label8;
         private Label label7;
-        private NumericUpDown txtProbVeterB;
-        private NumericUpDown txtProbVeterA;
-        private NumericUpDown txtProbApren;
         private NumericUpDown txtHastaVeterB;
         private NumericUpDown txtHastaVeterA;
         private NumericUpDown txtHastaAprendiz;
@@ -437,5 +477,8 @@
         private NumericUpDown txtDesdeCliente;
         private Label label14;
         private Button btnGenerar;
+        private TextBox txtProbVeterB;
+        private TextBox txtProbApren;
+        private TextBox txtProbVeterA;
     }
 }

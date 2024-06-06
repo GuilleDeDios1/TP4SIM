@@ -12,12 +12,14 @@ namespace WinFormsApp1.Clases
         //atributos
         private float tiempoEspera;
         private float tiempoLlegada;
-        private Estado sA;
+        private Estado estadoAnterior;
+        private Estado estado;
         private int id;
 
-        public Cliente(Estado sA, float reloj)
+
+        public Cliente(Estado SA, float reloj)
         {
-            this.sA = sA;
+            this.estado = SA;
             this.tiempoLlegada = reloj;
             IdClientes i = IdClientes.getInstance();
             id = i.GetIdClient();
@@ -69,7 +71,7 @@ namespace WinFormsApp1.Clases
 
         internal string getNombreEstado()
         {
-            return this.sA.getNombre();
+            return this.estado.getNombre();
         }
 
         internal float getTiempoLlegada()

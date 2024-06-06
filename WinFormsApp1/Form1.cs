@@ -12,6 +12,8 @@ namespace WinFormsApp1
         }
 
         private Random random = new Random();
+
+        int filaMax = 0;
         
         //estados
         private Estado EA = new Estado("EA");
@@ -33,15 +35,15 @@ namespace WinFormsApp1
 
         private double RNDFinAtencion;
         private float tiempoCalcFinAtencion;
-        private List<Cliente> clientesEnElSistema;
+        private List<Cliente> clientesEnElSistema = new List<Cliente>();
 
         //estadisticas
         private int colaMax = 0;
 
 
         //para mostrar
-        private List<Object> lista;
-        private List<List<Object>> MatrizMostrar;
+        private List<Object> lista = new List<object>();
+        private List<List<Object>> MatrizMostrar = new List<List<object>>();
 
         //datosLlegadaCliente
         private double RNDAtencion = 0;
@@ -64,39 +66,8 @@ namespace WinFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            int desdeAprendiz = (int) txtDesdeAprendiz.Value;
-            int hastaAprendiz = (int) txtHastaAprendiz.Value;
-            probAprendiz = (float) txtProbApren.Value;
-
-            int desdeVeterarnoA = (int)txtDesdeVeterA.Value;
-            int hastaVeterarnoA = (int)txtHastaVeterA.Value;
-            probVeteranoA = (float)txtProbVeterA.Value;
-
-            int desdeVeterarnoB = (int)txtDesdeVeterB.Value;
-            int hastaVeterarnoB = (int)txtHastaVeterB.Value;
-            probVeteranoB = (float)txtProbVeterB.Value;
-
-            Aprendiz = new Peluquero(desdeAprendiz, hastaAprendiz, EstadoLibre);
-            VeteranoA = new Peluquero(desdeVeterarnoA, hastaVeterarnoA, EstadoLibre);
-            VeteranoB = new Peluquero(desdeVeterarnoB, hastaVeterarnoB, EstadoLibre);
-
-            desdeClient = (int)txtDesdeCliente.Value;
-            hastaClient = (int)txtHastaCliente.Value;
-            if (reloj != 0 && diaAnterior != 0) {
-                
-            }
-            else {
-                if (tiempoLlegada < (float)Aprendiz.getFinAtencion() && tiempoLlegada < (float)VeteranoA.getFinAtencion() && tiempoLlegada < (float)VeteranoB.getFinAtencion())
-                {
-                    llegadaCliente();
-                }
-                else
-                {
-                    finAtencion();
-                }
-            }
             
-
+            
         }
 
         public void llegadaCliente ()
@@ -302,6 +273,9 @@ namespace WinFormsApp1
 
         public void addListaMatriz(List<Object> lista)
         {
+            if (filaMax < lista.Count) {
+                filaMax = lista.Count;
+            }
             MatrizMostrar.Add(lista);
         }
 
@@ -317,25 +291,28 @@ namespace WinFormsApp1
             {
                 // Acción para el aprendiz
                 quienAtiende = "Aprendiz";
-                Object[] finAtencion = Aprendiz.crearCliente(reloj,EstadoLibre,EstadoOcupado,SA,EA);
-                RNDFinAtencion = (float)finAtencion[0];
-                tiempoCalcFinAtencion = (float)finAtencion[0];
+                Object[] ArrayfinAtencion = Aprendiz.crearCliente(reloj,EstadoLibre,EstadoOcupado,SA,EA);
+                RNDFinAtencion = (float)ArrayfinAtencion[0];
+                tiempo = (float)ArrayfinAtencion[1];
+                tiempoCalcFinAtencion = (float)ArrayfinAtencion[2];
             }
             else if (RNDAtencion < probAprendiz + probVeteranoA)
             {
                 // Acción para el veterano A
                 quienAtiende = "VeteranoA";
-                Object[] finAtencion = VeteranoA.crearCliente(reloj, EstadoLibre, EstadoOcupado, SVA, EVA);
-                RNDFinAtencion = (float)finAtencion[0];
-                tiempoCalcFinAtencion = (float)finAtencion[0];
+                Object[] ArrayfinAtencion = VeteranoA.crearCliente(reloj, EstadoLibre, EstadoOcupado, SVA, EVA);
+                RNDFinAtencion = (float)ArrayfinAtencion[0];
+                tiempo = (float)ArrayfinAtencion[1];
+                tiempoCalcFinAtencion = (float)ArrayfinAtencion[2];
             }
             else if (RNDAtencion < probAprendiz + probVeteranoA + probVeteranoB)
             {
                 // Acción para el veterano B
                 quienAtiende = "VeteranoB";
-                Object[] finAtencion = VeteranoB.crearCliente(reloj, EstadoLibre, EstadoOcupado, SVB, EVB);
-                RNDFinAtencion = (float)finAtencion[0];
-                tiempoCalcFinAtencion = (float)finAtencion[0];
+                Object[] ArrayfinAtencion = VeteranoB.crearCliente(reloj, EstadoLibre, EstadoOcupado, SVB, EVB);
+                RNDFinAtencion = (float)ArrayfinAtencion[0];
+                tiempo = (float)ArrayfinAtencion[1];
+                tiempoCalcFinAtencion = (float)ArrayfinAtencion[2];
             }
 
 
@@ -365,6 +342,57 @@ namespace WinFormsApp1
             RNDLlegada = random.NextDouble();
             tiempo = ((hastaClient - desdeClient) * (float) RNDLlegada + desdeClient);
             tiempoLlegada = reloj + tiempo;
+        }
+
+        private void btnGenerar_Click(object sender, EventArgs e)
+        {
+            int desdeAprendiz = (int)txtDesdeAprendiz.Value;
+            int hastaAprendiz = (int)txtHastaAprendiz.Value;
+            probAprendiz = float.Parse(txtProbApren.Text);
+
+            int desdeVeterarnoA = (int)txtDesdeVeterA.Value;
+            int hastaVeterarnoA = (int)txtHastaVeterA.Value;
+            probVeteranoA = float.Parse(txtProbVeterA.Text);
+
+            int desdeVeterarnoB = (int)txtDesdeVeterB.Value;
+            int hastaVeterarnoB = (int)txtHastaVeterB.Value;
+            probVeteranoB = float.Parse(txtProbVeterB.Text);
+
+            Aprendiz = new Peluquero(desdeAprendiz, hastaAprendiz, EstadoLibre);
+            VeteranoA = new Peluquero(desdeVeterarnoA, hastaVeterarnoA, EstadoLibre);
+            VeteranoB = new Peluquero(desdeVeterarnoB, hastaVeterarnoB, EstadoLibre);
+
+            desdeClient = (int)txtDesdeCliente.Value;
+            hastaClient = (int)txtHastaCliente.Value;
+
+            
+            while(true)
+            {
+                if (reloj > (diaAnterior*1440)+(float)txtTiempoSumu.Value)
+                {
+                    Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
+                    mostrar.Show();
+                    this.Hide();
+                }
+                if ((float)Aprendiz.getFinAtencion() == 0f && (float)VeteranoA.getFinAtencion() == 0f && (float)VeteranoB.getFinAtencion() == 0f)
+                {
+                    llegadaCliente();
+                }
+                else {
+                    if (tiempoLlegada < (float)Aprendiz.getFinAtencion() || tiempoLlegada < (float)VeteranoA.getFinAtencion() || tiempoLlegada < (float)VeteranoB.getFinAtencion())
+                    {
+                        reloj += tiempoLlegada;
+                        llegadaCliente();
+                    }
+                    else
+                    {
+                        reloj += tiempoCalcFinAtencion;
+                        finAtencion();
+                    }
+                }
+                
+            }
+
         }
     }
 }

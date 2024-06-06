@@ -10,16 +10,13 @@ namespace WinFormsApp1.Clases
     {
         //atributos
         private Cliente clienteAtendiendo;
-        private List<Cliente> cola;
+        private List<Cliente> cola = new List<Cliente>();
         private int desde;
         private int hasta;
-        private float finAtencion = 0;
+        private float finAtencion = 0f;
         private string nombre;
-        private float rndTiempo;
         private float tiempo;
         private float tiempoLibre;
-        private float tiempoPromedioOcio;
-        private float tiempoTotal;
         private Estado estado;
         private Estado estadoAnterior;
 
@@ -73,11 +70,10 @@ namespace WinFormsApp1.Clases
 
         public void setClienteAtendiendo() { }
 
-        public void sosAprediz() { }
-
         public bool tenesClientesTiempoMayor(float reloj) {
             bool var = false;
-            foreach (Cliente cliente in cola) {
+            List<Cliente> colaCopy = new List<Cliente>(cola); ;
+            foreach (Cliente cliente in colaCopy) {
                 cliente.calcularNuevoTiempoEspera(reloj);
                 if (cliente.tiempoEsperaMayor()) {
                     sacarColaCliente(cliente);
@@ -101,24 +97,25 @@ namespace WinFormsApp1.Clases
                 Double RNDFinAtencion = random.NextDouble();
                 this.calcularFinAtencion(RNDFinAtencion,reloj);
                 this.setEstadoOcupado(estadoOcupado);
-                Object[] a = { RNDFinAtencion, this.tiempo, this.finAtencion };
+                Object[] a = { (float)RNDFinAtencion, this.tiempo, this.finAtencion };
                 return a;
             }
             if (!this.sosEstadoLibre(estadoLibre))
             {
                 Cliente cliente = new Cliente(estadoClienteEsperando, reloj);
                 this.addClienteCola(cliente);
-                Object[] b = {"","",""};
+                Object[] b = {0f,0f,0f};
                 return b;
             }
-            Object[] c = { "", "", "" };
+            Object[] c = { 0f, 0f,0f};
             return c;
         }
 
         public void setClienteACtual() { }
 
         public void calcularFinAtencion(Double random,float reloj) {
-            this.finAtencion = reloj + (desde + (float) random*(hasta - desde));
+            this.tiempo = (desde + (float)random * (hasta - desde));
+            this.finAtencion = reloj + tiempo;
         }
 
         public void setEstadoOcupado(Estado ocupado) {
@@ -166,7 +163,7 @@ namespace WinFormsApp1.Clases
         {
             this.estadoAnterior = this.estado;
             this.estado = Libre;
-        };
+        }
 
         internal object getFinAtencion()
         {
@@ -181,7 +178,10 @@ namespace WinFormsApp1.Clases
         internal List<Cliente> getClientes()
         {
             List<Cliente> clientes = cola;
-            clientes.Add(clienteAtendiendo);
+            if (clienteAtendiendo != null)
+            {
+                clientes.Add(clienteAtendiendo);
+            }
             return clientes;
         }
     }
