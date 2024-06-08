@@ -30,6 +30,7 @@
         {
             this.gbPeluqueros = new System.Windows.Forms.GroupBox();
             this.txtProbVeterB = new System.Windows.Forms.TextBox();
+            this.txtProbVeterA = new System.Windows.Forms.TextBox();
             this.txtProbApren = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -59,7 +60,6 @@
             this.txtDesdeCliente = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.btnGenerar = new System.Windows.Forms.Button();
-            this.txtProbVeterA = new System.Windows.Forms.TextBox();
             this.gbPeluqueros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterA)).BeginInit();
@@ -107,7 +107,15 @@
             this.txtProbVeterB.Name = "txtProbVeterB";
             this.txtProbVeterB.Size = new System.Drawing.Size(43, 23);
             this.txtProbVeterB.TabIndex = 19;
-            this.txtProbVeterB.Text = "0.50";
+            this.txtProbVeterB.Text = "0,50";
+            // 
+            // txtProbVeterA
+            // 
+            this.txtProbVeterA.Location = new System.Drawing.Point(233, 92);
+            this.txtProbVeterA.Name = "txtProbVeterA";
+            this.txtProbVeterA.Size = new System.Drawing.Size(43, 23);
+            this.txtProbVeterA.TabIndex = 18;
+            this.txtProbVeterA.Text = "0,25";
             // 
             // txtProbApren
             // 
@@ -115,7 +123,7 @@
             this.txtProbApren.Name = "txtProbApren";
             this.txtProbApren.Size = new System.Drawing.Size(43, 23);
             this.txtProbApren.TabIndex = 17;
-            this.txtProbApren.Text = "0.25";
+            this.txtProbApren.Text = "0,25";
             // 
             // label10
             // 
@@ -404,14 +412,6 @@
             this.btnGenerar.Text = "Generar";
             this.btnGenerar.UseVisualStyleBackColor = true;
             this.btnGenerar.Click += new System.EventHandler(this.btnGenerar_Click);
-            // 
-            // txtProbVeterA
-            // 
-            this.txtProbVeterA.Location = new System.Drawing.Point(233, 92);
-            this.txtProbVeterA.Name = "txtProbVeterA";
-            this.txtProbVeterA.Size = new System.Drawing.Size(43, 23);
-            this.txtProbVeterA.TabIndex = 18;
-            this.txtProbVeterA.Text = "0.25";
             // 
             // Form1
             // 
