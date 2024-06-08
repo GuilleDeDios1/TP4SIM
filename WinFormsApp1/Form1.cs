@@ -169,11 +169,11 @@ namespace WinFormsApp1
                     //verifica en la lista anterior cual es el menor tiempo
                     if (!banderaDiaNuevo)
                     {
-                        float llegadaVeteranoa = (float)listaAnterior[10];
-                        float llegadaVeteranoB = (float)listaAnterior[11];
-                        float llegadaAprendis = (float)listaAnterior[12];
+                        float finAtencionVeteranoA = (float)listaAnterior[10];
+                        float finAtencionVeteranoB = (float)listaAnterior[11];
+                        float finAtencionAprendiz = (float)listaAnterior[12];
                         float LlegadaCliente = (float)listaAnterior[7];
-                        List<float> variables = new List<float> { (float)llegadaVeteranoa, (float)llegadaVeteranoB, (float)llegadaAprendis, (float)LlegadaCliente };
+                        List<float> variables = new List<float> { (float)finAtencionVeteranoA, (float)finAtencionVeteranoB, (float)finAtencionAprendiz, (float)LlegadaCliente };
                         List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
                         // Encontrar el valor mínimo de la lista que no tiene ceros
                         float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
@@ -185,22 +185,23 @@ namespace WinFormsApp1
                         }
                         else
                         {
-                                if ((float)listaAnterior[10] <= (float)listaAnterior[11] && (float)listaAnterior[10] <= (float)listaAnterior[12])
-                                {
-                                    lista.Add((float)listaAnterior[10]);
-                                    acumuladorMinutos += (float)listaAnterior[10];
-                                }
-                                else if ((float)listaAnterior[11] <= (float)listaAnterior[10] && (float)listaAnterior[11] <= (float)listaAnterior[12])
-                                {
-                                    lista.Add((float)listaAnterior[11]);
-                                    acumuladorMinutos += (float)listaAnterior[11];
-                                }
-                                else
-                                {
-                                    lista.Add((float)listaAnterior[12]);
-                                    acumuladorMinutos += (float)listaAnterior[12];
-                                }
-                         }
+                            variables.Remove(LlegadaCliente);
+                            if (minimo.HasValue && minimo == finAtencionVeteranoA)
+                            {
+                                lista.Add((float)listaAnterior[10]);
+                                acumuladorMinutos += (float)listaAnterior[10];
+                            }
+                            else if (minimo.HasValue && minimo == finAtencionVeteranoB)
+                            {
+                                lista.Add((float)listaAnterior[11]);
+                                acumuladorMinutos += (float)listaAnterior[11];
+                            }
+                            else
+                            {
+                                lista.Add((float)listaAnterior[12]);
+                                acumuladorMinutos += (float)listaAnterior[12];
+                            }
+                        }
                     }
                     else {
                         lista.Add(0f);
@@ -283,7 +284,7 @@ namespace WinFormsApp1
                         //Para Fin Atencion
                         else
                         {
-                            if ((int)listaAnterior[14] == 0 && (int)listaAnterior[16] == 0 && (int)listaAnterior[18] == 0)
+                            if (lista[0] == "FinAtencion")
                             {
                                 lista.Add(0f);
                                 lista.Add(0f);
@@ -655,7 +656,7 @@ namespace WinFormsApp1
                                 lista.Add(listaAnterior[14]);
                                 lista.Add(listaAnterior[15]);
                                 lista.Add(listaAnterior[16]);
-                                lista.Add("Libre");
+                                lista.Add("Ocupado");
                                 lista.Add((int)listaAnterior[18] - 1);
                                 decrementaColaVeteB = false;
                             }
@@ -685,7 +686,7 @@ namespace WinFormsApp1
                 //Cosas de clientes si sos peluquero no te metas
                 if (esLlegadaCliente && atiendeAprendiz)
                 {
-                    if ((int)lista[14] == 0)
+                    if ((int)lista[14] == 0 && (string)listaAnterior[13] == "Libre")
                     {
                         Cliente nuevoClienteAprendizSA = new Cliente("SAA", (float)lista[2]);
                         listaCliente.Add(nuevoClienteAprendizSA);
@@ -699,7 +700,7 @@ namespace WinFormsApp1
                 }
                 if (esLlegadaCliente && atiendeVeteA)
                 {
-                    if ((int)lista[14] == 0)
+                    if ((int)lista[14] == 0 && (string)listaAnterior[15] == "Libre")
                     {
                         Cliente nuevoClienteVeteASA = new Cliente("SAVA", (float)lista[2]);
                         listaCliente.Add(nuevoClienteVeteASA);
@@ -713,7 +714,7 @@ namespace WinFormsApp1
                 }
                 if (esLlegadaCliente && atiendeVeteB)
                 {
-                    if ((int)lista[14] == 0)
+                    if ((int)lista[14] == 0 && (string)listaAnterior[17] == "Libre")
                     {
                         Cliente nuevoClienteVetaBSA = new Cliente("SAVB", (float)lista[2]);
                         listaCliente.Add(nuevoClienteVetaBSA);
