@@ -33,14 +33,18 @@ namespace WinFormsApp1
 
         internal bool superasteLos30Min(float v)
         {
-            if ((v - this.tiempoLlegada) > 30f)
-            {
-                return true;
-            }
-            else {
-                this.tiempoEspera = v - tiempoLlegada;
+            if (this.estado == "EAVA" || this.estado == "EAVB" || this.estado == "EAA") {
+                if ((v - this.tiempoLlegada) > 30f)
+                {
+                    return true;
+                }
+                else
+                {
+                    this.tiempoEspera = v - tiempoLlegada;
+                }
             }
             return false;
+
         }
     }
 }

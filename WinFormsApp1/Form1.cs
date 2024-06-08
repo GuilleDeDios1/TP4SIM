@@ -188,20 +188,24 @@ namespace WinFormsApp1
                         }
                         else
                         {
-                                if ((float)listaAnterior[10] <= (float)listaAnterior[11] && (float)listaAnterior[10] <= (float)listaAnterior[12])
+
+                                if (minimo.HasValue && minimo == finAtencionVeteranoA)
                                 {
                                     lista.Add((float)listaAnterior[10]);
                                     acumuladorMinutos += (float)listaAnterior[10];
+                                    seVaElAtendidoPorVA = true;
                                 }
-                                else if ((float)listaAnterior[11] <= (float)listaAnterior[10] && (float)listaAnterior[11] <= (float)listaAnterior[12])
+                                else if (minimo.HasValue && minimo == finAtencionVeteranoB)
                                 {
                                     lista.Add((float)listaAnterior[11]);
                                     acumuladorMinutos += (float)listaAnterior[11];
+                                    seVaElAtendidoPorVB = true;
                                 }
                                 else
                                 {
                                     lista.Add((float)listaAnterior[12]);
                                     acumuladorMinutos += (float)listaAnterior[12];
+                                    seVaElAtendidoPorA = true;
                                 }
                          }
                     }
@@ -286,7 +290,7 @@ namespace WinFormsApp1
                         //Para Fin Atencion
                         else
                         {
-                            if ((int)listaAnterior[14] == 0 && (int)listaAnterior[16] == 0 && (int)listaAnterior[18] == 0)
+                            if ((string)lista[0] == "FinAtencion")
                             {
                                 lista.Add(0f);
                                 lista.Add(0f);
@@ -308,10 +312,6 @@ namespace WinFormsApp1
                     lista.Add(tiempo);
                     lista.Add(tiempo + (float)lista[2]);
                 }
-                
-                
-                
-                
                 //finAtencion
                 if(i == 0)
                 {
@@ -416,14 +416,14 @@ namespace WinFormsApp1
                                 lista.Add(0);
                                 lista.Add(listaAnterior[10]);
                                 lista.Add(listaAnterior[11]);
-                                lista.Add(listaAnterior[12]);
+                                lista.Add(0f);
                                 setEstadoLibreAprendiz = true;
                             }
                             if ((int)listaAnterior[16] == 0 && seVaElAtendidoPorVA)
                             {
                                 lista.Add(0);
                                 lista.Add(0);
-                                lista.Add(listaAnterior[10]);
+                                lista.Add(0f);
                                 lista.Add(listaAnterior[11]);
                                 lista.Add(listaAnterior[12]);
                                 setEstadoLibreVeteA = true;
@@ -433,7 +433,7 @@ namespace WinFormsApp1
                                 lista.Add(0);
                                 lista.Add(0);
                                 lista.Add(listaAnterior[10]);
-                                lista.Add(listaAnterior[11]);
+                                lista.Add(0f);
                                 lista.Add(listaAnterior[12]);
                                 setEstadoLibreVeteB = true;
                             }
@@ -449,7 +449,8 @@ namespace WinFormsApp1
                                 lista.Add(tiempoAtencion + (float)lista[2]);
                                 decrementaColaApre = true;
                                 bool yapaso = false;
-                                foreach (Cliente cliente in listaCliente)
+                                List<Cliente> copia = new List<Cliente>(listaCliente);
+                                foreach (Cliente cliente in copia)
                                 {
                                     if (cliente.getEstado() == "SAA")
                                     {
@@ -473,7 +474,8 @@ namespace WinFormsApp1
                                 lista.Add(listaAnterior[12]);
                                 decrementaColaVeteA = true;
                                 bool yapaso = false;
-                                foreach (Cliente cliente in listaCliente)
+                                List<Cliente> copia = new List<Cliente>(listaCliente);
+                                foreach (Cliente cliente in copia)
                                 {
                                     if (cliente.getEstado() == "SAVA")
                                     {
@@ -497,7 +499,8 @@ namespace WinFormsApp1
                                 lista.Add(listaAnterior[12]);
                                 decrementaColaVeteB = true;
                                 bool yapaso = false;
-                                foreach (Cliente cliente in listaCliente)
+                                List<Cliente> copia = new List<Cliente>(listaCliente);
+                                foreach (Cliente cliente in copia)
                                 {
                                     if (cliente.getEstado() == "SAVB")
                                     {
@@ -709,7 +712,7 @@ namespace WinFormsApp1
                 }
                 if (esLlegadaCliente && atiendeVeteA)
                 {
-                    if ((int)lista[14] == 0 && (string)listaAnterior[15] == "Libre")
+                    if ((int)lista[16] == 0 && (string)listaAnterior[15] == "Libre")
                     {
                         Cliente nuevoClienteVeteASA = new Cliente("SAVA", (float)lista[2]);
                         listaCliente.Add(nuevoClienteVeteASA);
@@ -723,7 +726,7 @@ namespace WinFormsApp1
                 }
                 if (esLlegadaCliente && atiendeVeteB)
                 {
-                    if ((int)lista[14] == 0 && (string)listaAnterior[17] == "Libre")
+                    if ((int)lista[18] == 0 && (string)listaAnterior[17] == "Libre")
                     {
                         Cliente nuevoClienteVetaBSA = new Cliente("SAVB", (float)lista[2]);
                         listaCliente.Add(nuevoClienteVetaBSA);
@@ -737,6 +740,13 @@ namespace WinFormsApp1
                 }
                 //la parte de eliminacion de clientes esta en la linea 347
 
+                foreach (Cliente cliente in listaCliente)
+                {
+                    if (cliente.superasteLos30Min((float)lista[2]))
+                    {
+                        listaCliente.Remove(cliente);
+                    }
+                }
                 //recorre y agrega los clientes
                 foreach (Cliente cliente in listaCliente)
                 {
@@ -745,14 +755,7 @@ namespace WinFormsApp1
                     lista.Add(cliente.getTiempoLlegada());
                     lista.Add(cliente.getTiempoEspera());
                 }
-                foreach (Cliente cliente in listaCliente)
-                {
-                    if (cliente.superasteLos30Min((float)lista[2]))
-                    {
-                        listaCliente.Remove(cliente);
-                    }
-                }
-
+            
                 MatrizMostrar.Add(lista);
                 if (filaMax < lista.Count())
                 {
