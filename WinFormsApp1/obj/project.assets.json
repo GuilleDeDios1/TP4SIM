@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\UTN4\\SIM\\TPs\\TP4SIM\\WinFormsApp1\\WinFormsApp1.csproj",
+      "projectUniqueName": "E:\\UTN4\\SIM\\TPs\\Tp4SIM\\WinFormsApp1\\WinFormsApp1.csproj",
       "projectName": "WinFormsApp1",
-      "projectPath": "E:\\UTN4\\SIM\\TPs\\TP4SIM\\WinFormsApp1\\WinFormsApp1.csproj",
+      "projectPath": "E:\\UTN4\\SIM\\TPs\\Tp4SIM\\WinFormsApp1\\WinFormsApp1.csproj",
       "packagesPath": "C:\\Users\\guill\\.nuget\\packages\\",
-      "outputPath": "E:\\UTN4\\SIM\\TPs\\TP4SIM\\WinFormsApp1\\obj\\",
+      "outputPath": "E:\\UTN4\\SIM\\TPs\\Tp4SIM\\WinFormsApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\guill\\AppData\\Roaming\\NuGet\\NuGet.Config",
