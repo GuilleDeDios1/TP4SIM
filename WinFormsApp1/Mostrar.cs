@@ -19,12 +19,7 @@ namespace WinFormsApp1
             InitializeComponent();
             this.matrizMostrar= matrizMostrar;
             this.filaMax= filaMax;
-            foreach (var row in matrizMostrar)
-            {
-                var rowData = new object[filaMax];
-                row.CopyTo(rowData);
-                dataGridView.Rows.Add(rowData);
-            }
+
         }
 
         private void Mostrar_Load(object sender, EventArgs e)
@@ -43,6 +38,12 @@ namespace WinFormsApp1
             for (int i = 0; i < additionalColumns; i++)
             {
                 dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "");
+            }
+            foreach (var row in matrizMostrar)
+            {
+                var rowData = new object[filaMax];
+                row.CopyTo(rowData);
+                dataGridView.Rows.Add(rowData);
             }
 
         }

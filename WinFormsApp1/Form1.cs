@@ -75,6 +75,7 @@ namespace WinFormsApp1
             {
                 List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)desdeItera + (int)hastaItera);
                 Mostrar mostrar = new Mostrar(MatrizMostrar,filaMax);
+                mostrar.Show();
             }
             else
             {
@@ -418,7 +419,16 @@ namespace WinFormsApp1
                                 lista.Add(listaAnterior[11]);
                                 lista.Add(0f);
                                 setEstadoLibreAprendiz = true;
-                            }
+                                seVaElAtendidoPorA = false;
+                                List<Cliente> copia = new List<Cliente>(listaCliente);
+                                foreach (Cliente cliente in copia)
+                                {
+                                    if (cliente.getEstado() == "SAA")
+                                    {
+                                        listaCliente.Remove(cliente);
+                                    }
+                                }
+                        }
                             if ((int)listaAnterior[16] == 0 && seVaElAtendidoPorVA)
                             {
                                 lista.Add(0);
@@ -426,7 +436,18 @@ namespace WinFormsApp1
                                 lista.Add(0f);
                                 lista.Add(listaAnterior[11]);
                                 lista.Add(listaAnterior[12]);
+                                seVaElAtendidoPorA = false;
+                                List<Cliente> copia = new List<Cliente>(listaCliente);
+                                foreach (Cliente cliente in copia)
+                                {
+                                    if (cliente.getEstado() == "SAVA")
+                                    {
+                                        listaCliente.Remove(cliente);
+                                    }
+                                }
+
                                 setEstadoLibreVeteA = true;
+                                seVaElAtendidoPorVA = false;
                             }
                             if ((int)listaAnterior[18] == 0 && seVaElAtendidoPorVB)
                             {
@@ -435,7 +456,17 @@ namespace WinFormsApp1
                                 lista.Add(listaAnterior[10]);
                                 lista.Add(0f);
                                 lista.Add(listaAnterior[12]);
-                                setEstadoLibreVeteB = true;
+                                seVaElAtendidoPorA = false;
+                                List<Cliente> copia = new List<Cliente>(listaCliente);
+                                foreach (Cliente cliente in copia)
+                                {
+                                    if (cliente.getEstado() == "SAVB")
+                                    {
+                                        listaCliente.Remove(cliente);
+                                    }
+                                }
+                            setEstadoLibreVeteB = true;
+                                seVaElAtendidoPorVB = false;
                             }
                             //Hay cola
                             if ((int)listaAnterior[14] != 0 && seVaElAtendidoPorA)
