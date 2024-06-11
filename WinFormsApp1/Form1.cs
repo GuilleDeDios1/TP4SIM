@@ -168,31 +168,32 @@ namespace WinFormsApp1
                         // Encontrar el valor mínimo de la lista que no tiene ceros
                         float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
-                    {
-                        lista.Add((float)listaAnterior[7]);
-                    }
-                    else {
-                        if (minimo.HasValue && minimo == finAtencionVeteranoA)
+                        if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
                         {
-                            lista.Add((float)listaAnterior[10]);
-                            seVaElAtendidoPorVA = true;
-                        }
-                        else if (minimo.HasValue && minimo == finAtencionVeteranoB)
-                        {
-                            lista.Add((float)listaAnterior[11]);
-                            seVaElAtendidoPorVB = true;
+                            lista.Add((float)listaAnterior[7]);
                         }
                         else
                         {
-                            lista.Add((float)listaAnterior[12]);
-                            seVaElAtendidoPorA = true;
-                        }
-                    }
-                        
 
-
-
+                                if (minimo.HasValue && minimo == finAtencionVeteranoA)
+                                {
+                                    lista.Add((float)listaAnterior[10]);
+                                    seVaElAtendidoPorVA = true;
+                                }
+                                else if (minimo.HasValue && minimo == finAtencionVeteranoB)
+                                {
+                                    lista.Add((float)listaAnterior[11]);
+                                    seVaElAtendidoPorVB = true;
+                                }
+                                else
+                                {
+                                    lista.Add((float)listaAnterior[12]);
+                                    seVaElAtendidoPorA = true;
+                                }
+                         }
+                    
+                    
+                    
                 }
 
                 //RNDQuienAtiende
@@ -778,7 +779,7 @@ namespace WinFormsApp1
                 if (i != 0 && (float)listaAnterior[2] > 480) {
                     bastaClientes = true;
                 }
-                if (i != 0 && (float)listaAnterior[2] > 480 && (string)lista[13] == "Libre" && (string)lista[15] == "Libre" && (string)lista[17] == "Libre")
+                if (i != 0 && (float)listaAnterior[2] > 480 && (int)listaAnterior[14] == 0 && (int)listaAnterior[16] == 0 && (int)listaAnterior[18] == 0)
                 {
                     contadorDia += 1;
                     i = -1;
