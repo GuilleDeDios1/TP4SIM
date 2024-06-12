@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sht637QJQ0E=",
+  "dgSpecHash": "w+8XqOzd/kaN/ucko21TpyxAafoS+7FKP8uptEqcPVaDQ7Ez3tGJgvC9TChvjxxgOEk19/IU0mOw9jjjQdgN8w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Francisco\\Desktop\\TP4SIM\\WinFormsApp1\\WinFormsApp1.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.30\\microsoft.windowsdesktop.app.ref.6.0.30.nupkg.sha512",
-    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.30\\microsoft.netcore.app.ref.6.0.30.nupkg.sha512",
-    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.30\\microsoft.aspnetcore.app.ref.6.0.30.nupkg.sha512",
-    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.30\\microsoft.netcore.app.host.win-x64.6.0.30.nupkg.sha512"
-  ],
+  "projectFilePath": "E:\\UTN4\\SIM\\TPs\\Tp4SIM\\WinFormsApp1\\WinFormsApp1.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

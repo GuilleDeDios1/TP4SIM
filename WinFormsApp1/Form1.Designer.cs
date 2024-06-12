@@ -45,13 +45,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtTiempoSumu = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtDesdeItera = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtHastaItera = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtHastaItera = new System.Windows.Forms.TextBox();
+            this.txtDesdeItera = new System.Windows.Forms.TextBox();
+            this.txtTiempoSumu = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -60,6 +60,7 @@
             this.txtDesdeCliente = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.btnGenerar = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.gbPeluqueros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterA)).BeginInit();
@@ -67,9 +68,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeAprendiz)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTiempoSumu)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeItera)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHastaItera)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaCliente)).BeginInit();
@@ -94,9 +92,9 @@
             this.gbPeluqueros.Controls.Add(this.label6);
             this.gbPeluqueros.Controls.Add(this.label5);
             this.gbPeluqueros.Controls.Add(this.label4);
-            this.gbPeluqueros.Location = new System.Drawing.Point(12, 165);
+            this.gbPeluqueros.Location = new System.Drawing.Point(12, 193);
             this.gbPeluqueros.Name = "gbPeluqueros";
-            this.gbPeluqueros.Size = new System.Drawing.Size(288, 172);
+            this.gbPeluqueros.Size = new System.Drawing.Size(288, 160);
             this.gbPeluqueros.TabIndex = 0;
             this.gbPeluqueros.TabStop = false;
             this.gbPeluqueros.Text = "Peluqueros";
@@ -108,6 +106,7 @@
             this.txtProbVeterB.Size = new System.Drawing.Size(43, 23);
             this.txtProbVeterB.TabIndex = 19;
             this.txtProbVeterB.Text = "0,50";
+            this.txtProbVeterB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProbVeterB_KeyPress);
             // 
             // txtProbVeterA
             // 
@@ -116,6 +115,7 @@
             this.txtProbVeterA.Size = new System.Drawing.Size(43, 23);
             this.txtProbVeterA.TabIndex = 18;
             this.txtProbVeterA.Text = "0,25";
+            this.txtProbVeterA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProbVeterA_KeyPress);
             // 
             // txtProbApren
             // 
@@ -124,6 +124,7 @@
             this.txtProbApren.Size = new System.Drawing.Size(43, 23);
             this.txtProbApren.TabIndex = 17;
             this.txtProbApren.Text = "0,25";
+            this.txtProbApren.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProbApren_KeyPress);
             // 
             // label10
             // 
@@ -260,18 +261,6 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Aprendiz";
             // 
-            // txtTiempoSumu
-            // 
-            this.txtTiempoSumu.Location = new System.Drawing.Point(162, 29);
-            this.txtTiempoSumu.Name = "txtTiempoSumu";
-            this.txtTiempoSumu.Size = new System.Drawing.Size(120, 23);
-            this.txtTiempoSumu.TabIndex = 1;
-            this.txtTiempoSumu.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -290,13 +279,6 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Desde Iteracion";
             // 
-            // txtDesdeItera
-            // 
-            this.txtDesdeItera.Location = new System.Drawing.Point(162, 67);
-            this.txtDesdeItera.Name = "txtDesdeItera";
-            this.txtDesdeItera.Size = new System.Drawing.Size(120, 23);
-            this.txtDesdeItera.TabIndex = 3;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -306,27 +288,45 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Hasta Iteracion";
             // 
-            // txtHastaItera
-            // 
-            this.txtHastaItera.Location = new System.Drawing.Point(162, 109);
-            this.txtHastaItera.Name = "txtHastaItera";
-            this.txtHastaItera.Size = new System.Drawing.Size(120, 23);
-            this.txtHastaItera.TabIndex = 5;
-            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.txtHastaItera);
+            this.groupBox1.Controls.Add(this.txtDesdeItera);
+            this.groupBox1.Controls.Add(this.txtTiempoSumu);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtHastaItera);
-            this.groupBox1.Controls.Add(this.txtTiempoSumu);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtDesdeItera);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(288, 147);
+            this.groupBox1.Size = new System.Drawing.Size(288, 175);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Simulacion";
+            // 
+            // txtHastaItera
+            // 
+            this.txtHastaItera.Location = new System.Drawing.Point(166, 111);
+            this.txtHastaItera.Name = "txtHastaItera";
+            this.txtHastaItera.Size = new System.Drawing.Size(100, 23);
+            this.txtHastaItera.TabIndex = 9;
+            this.txtHastaItera.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtHastaItera_KeyPress);
+            // 
+            // txtDesdeItera
+            // 
+            this.txtDesdeItera.Location = new System.Drawing.Point(166, 69);
+            this.txtDesdeItera.Name = "txtDesdeItera";
+            this.txtDesdeItera.Size = new System.Drawing.Size(100, 23);
+            this.txtDesdeItera.TabIndex = 8;
+            this.txtDesdeItera.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDesdeItera_KeyPress);
+            // 
+            // txtTiempoSumu
+            // 
+            this.txtTiempoSumu.Location = new System.Drawing.Point(166, 28);
+            this.txtTiempoSumu.Name = "txtTiempoSumu";
+            this.txtTiempoSumu.Size = new System.Drawing.Size(100, 23);
+            this.txtTiempoSumu.TabIndex = 7;
+            this.txtTiempoSumu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTiempoSumu_KeyPress);
             // 
             // groupBox2
             // 
@@ -336,7 +336,7 @@
             this.groupBox2.Controls.Add(this.txtHastaCliente);
             this.groupBox2.Controls.Add(this.txtDesdeCliente);
             this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Location = new System.Drawing.Point(12, 354);
+            this.groupBox2.Location = new System.Drawing.Point(12, 359);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(288, 97);
             this.groupBox2.TabIndex = 8;
@@ -413,6 +413,16 @@
             this.btnGenerar.UseVisualStyleBackColor = true;
             this.btnGenerar.Click += new System.EventHandler(this.btnGenerar_Click);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(57, 150);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(181, 19);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Mostrar simulacion completa";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -433,9 +443,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeVeterA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeAprendiz)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTiempoSumu)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDesdeItera)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHastaItera)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -449,12 +456,9 @@
         #endregion
 
         private GroupBox gbPeluqueros;
-        private NumericUpDown txtTiempoSumu;
         private Label label1;
         private Label label2;
-        private NumericUpDown txtDesdeItera;
         private Label label3;
-        private NumericUpDown txtHastaItera;
         private GroupBox groupBox1;
         private Label label10;
         private Label label9;
@@ -480,5 +484,9 @@
         private TextBox txtProbVeterB;
         private TextBox txtProbApren;
         private TextBox txtProbVeterA;
+        private TextBox txtHastaItera;
+        private TextBox txtDesdeItera;
+        private TextBox txtTiempoSumu;
+        private CheckBox checkBox1;
     }
 }

@@ -63,24 +63,39 @@ namespace WinFormsApp1
             desdeClient = (int)txtDesdeCliente.Value;
             hastaClient = (int)txtHastaCliente.Value;
 
-            timmpoSimu = ((float)txtTiempoSumu.Value) * 60f;
+            timmpoSimu = (float.Parse(txtTiempoSumu.Text) * 60f);
 
-            desdeItera = (int)txtDesdeItera.Value;
+            desdeItera = int.Parse(txtDesdeItera.Text);
 
-            hastaItera = (int)txtHastaItera.Value;
+            hastaItera = int.Parse(txtHastaItera.Text);
 
-            simular();
-
-            if (MatrizMostrar.Count() >= (desdeItera + hastaItera))
+            if((probVeteranoA + probVeteranoB + probAprendiz) == 1f)
             {
-                List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)hastaItera);
-                Mostrar mostrar = new Mostrar(subMatrix, filaMax);
-                mostrar.Show();
+                simular();
+
+                if (MatrizMostrar.Count() >= (desdeItera + hastaItera))
+                {
+                    List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)hastaItera);
+                    if (checkBox1.Checked) {
+                        Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
+                        mostrar.Show();
+                    }
+                    else {
+                        Mostrar mostrar = new Mostrar(subMatrix, filaMax);
+                        mostrar.Show();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La simulacion no alcanzo las lineas a mostrar");
+                }
             }
             else
             {
-                MessageBox.Show("La simulacion no alcanzo las lineas a mostrar");
+                MessageBox.Show("La suma de probabilidades no da 1");
             }
+
+            
         }
         public void mostrar(List<List<Object>> matrizMostrar)
         {
@@ -800,6 +815,78 @@ namespace WinFormsApp1
                 seVaElAtendidoPorVA = false;
                 seVaElAtendidoPorVB = false;
                 vanderaLlenoLlegadaCliente = false;
+            }
+        }
+
+        private void txtTiempoSumu_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if (e.KeyChar == ',' && (sender as TextBox).Text.Contains(","))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtDesdeItera_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtHastaItera_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtProbApren_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma y asegurar que no sea el primer carácter
+            if (e.KeyChar == ',' && ((sender as TextBox).Text.Contains(",") || (sender as TextBox).Text.Length == 0))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtProbVeterA_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma y asegurar que no sea el primer carácter
+            if (e.KeyChar == ',' && ((sender as TextBox).Text.Contains(",") || (sender as TextBox).Text.Length == 0))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtProbVeterB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma y asegurar que no sea el primer carácter
+            if (e.KeyChar == ',' && ((sender as TextBox).Text.Contains(",") || (sender as TextBox).Text.Length == 0))
+            {
+                e.Handled = true;
             }
         }
     }
