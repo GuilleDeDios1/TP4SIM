@@ -34,10 +34,13 @@ namespace WinFormsApp1
             }
 
             // Agregar columnas sin nombre hasta filaMax
-            int additionalColumns = filaMax - columnNames.Length;
+            int additionalColumns = (filaMax - columnNames.Length)/4;
             for (int i = 0; i < additionalColumns; i++)
             {
-                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "");
+                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "Id");
+                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "Estado");
+                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "TiempoLlegada");
+                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "TiempoEspera");
             }
             foreach (var row in matrizMostrar)
             {

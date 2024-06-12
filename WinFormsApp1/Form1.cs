@@ -63,18 +63,18 @@ namespace WinFormsApp1
             desdeClient = (int)txtDesdeCliente.Value;
             hastaClient = (int)txtHastaCliente.Value;
 
-            timmpoSimu = ((float)txtTiempoSumu.Value)*60;
+            timmpoSimu = ((float)txtTiempoSumu.Value) * 60;
 
             desdeItera = (int)txtDesdeItera.Value;
 
             hastaItera = (int)txtHastaItera.Value;
 
             simular();
-
+            
             if (MatrizMostrar.Count() >= (desdeItera + hastaItera))
             {
                 List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)desdeItera + (int)hastaItera);
-                Mostrar mostrar = new Mostrar(MatrizMostrar,filaMax);
+                Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
                 mostrar.Show();
             }
             else
@@ -82,7 +82,10 @@ namespace WinFormsApp1
                 MessageBox.Show("La simulacion no alcanzo las lineas a mostrar");
             }
         }
-
+        public void mostrar(List<List<Object>>matrizMostrar) {
+            Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
+            mostrar.Show();
+        }
 
         public void simular()
         {
@@ -108,14 +111,15 @@ namespace WinFormsApp1
             bool atiendeVeteA = false;
             bool atiendeVeteB = false;
             float acumuladorMinutos = 0f;
-            bool seVaElAtendidoPorVA = true;
-            bool seVaElAtendidoPorVB = true;
-            bool seVaElAtendidoPorA = true;
+            bool seVaElAtendidoPorVA = false;
+            bool seVaElAtendidoPorVB = false;
+            bool seVaElAtendidoPorA = false;
             int contadorDia = 0;
             bool bastaClientes = false;
-            for (int i = 0;acumuladorMinutos < timmpoSimu; i++)
+            int maxIt = 100;
+            
+            for (int i = 0; acumuladorMinutos < timmpoSimu; i++)
             {
-                
                 //agrega evento
                 if (i == 0)
                 {
@@ -132,13 +136,13 @@ namespace WinFormsApp1
                     List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
                     // Encontrar el valor mínimo de la lista que no tiene ceros
                     float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
-                    
+
                     if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
                     {
                         // Ejecutar las líneas de código solamente si LlegadaCliente es la menor entre las variables que no son 0
                         lista.Add("LlegadaCliente");
                         esLlegadaCliente = true;
-                    //Para Fin Atencion
+                        //Para Fin Atencion
                     }
                     else
                     {
@@ -149,7 +153,7 @@ namespace WinFormsApp1
                 }
                 //reloj dia
                 lista.Add(contadorDia);
-                
+
                 //reloj minutos
                 if (i == 0)
                 {
@@ -158,53 +162,52 @@ namespace WinFormsApp1
                 else
                 {
                     //verifica en la lista anterior cual es el menor tiempo
-                    
-                        float finAtencionVeteranoA = (float)listaAnterior[10];
-                        float finAtencionVeteranoB = (float)listaAnterior[11];
-                        float finAtencionAprendiz = (float)listaAnterior[12];
-                        float LlegadaCliente = (float)listaAnterior[7];
-                        List<float> variables = new List<float> { (float)finAtencionVeteranoA, (float)finAtencionVeteranoB, (float)finAtencionAprendiz, (float)LlegadaCliente };
-                        List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
-                        // Encontrar el valor mínimo de la lista que no tiene ceros
-                        float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                        if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
+                    float finAtencionVeteranoA = (float)listaAnterior[10];
+                    float finAtencionVeteranoB = (float)listaAnterior[11];
+                    float finAtencionAprendiz = (float)listaAnterior[12];
+                    float LlegadaCliente = (float)listaAnterior[7];
+                    List<float> variables = new List<float> { (float)finAtencionVeteranoA, (float)finAtencionVeteranoB, (float)finAtencionAprendiz, (float)LlegadaCliente };
+                    List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
+                    // Encontrar el valor mínimo de la lista que no tiene ceros
+                    float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
+
+                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
+                    {
+                        lista.Add((float)listaAnterior[7]);
+                    }
+                    else
+                    {
+
+                        if (minimo.HasValue && minimo == finAtencionVeteranoA)
                         {
-                            lista.Add((float)listaAnterior[7]);
+                            lista.Add((float)listaAnterior[10]);
+                            seVaElAtendidoPorVA = true;
+                        }
+                        else if (minimo.HasValue && minimo == finAtencionVeteranoB)
+                        {
+                            lista.Add((float)listaAnterior[11]);
+                            seVaElAtendidoPorVB = true;
                         }
                         else
                         {
+                            lista.Add((float)listaAnterior[12]);
+                            seVaElAtendidoPorA = true;
+                        }
+                    }
 
-                                if (minimo.HasValue && minimo == finAtencionVeteranoA)
-                                {
-                                    lista.Add((float)listaAnterior[10]);
-                                    seVaElAtendidoPorVA = true;
-                                }
-                                else if (minimo.HasValue && minimo == finAtencionVeteranoB)
-                                {
-                                    lista.Add((float)listaAnterior[11]);
-                                    seVaElAtendidoPorVB = true;
-                                }
-                                else
-                                {
-                                    lista.Add((float)listaAnterior[12]);
-                                    seVaElAtendidoPorA = true;
-                                }
-                         }
-                    
-                    
-                    
                 }
 
                 //RNDQuienAtiende
-                if(i == 0)
+                if (i == 0)
                 {
                     lista.Add(0f);
                     lista.Add(0f);
                 }
                 else
                 {
-                    if (i == 1) {
+                    if (i == 1)
+                    {
                         float randomQuienAtiende = (float)random.NextDouble();
                         lista.Add(randomQuienAtiende);
 
@@ -230,7 +233,8 @@ namespace WinFormsApp1
                             }
                         }
                     }
-                    else {
+                    else
+                    {
                         //para llegadaCliente
                         float llegadaVeteranoa = (float)listaAnterior[10];
                         float llegadaVeteranoB = (float)listaAnterior[11];
@@ -282,7 +286,7 @@ namespace WinFormsApp1
                             }
                         }
                     }
-                    
+
                 }
                 //RNDTiempoLlegada
                 if (!vanderaLlenoLlegadaCliente)
@@ -294,7 +298,7 @@ namespace WinFormsApp1
                     lista.Add(tiempo + (float)lista[2]);
                 }
                 //finAtencion
-                if(i == 0)
+                if (i == 0)
                 {
                     lista.Add(0f);
                     lista.Add(0f);
@@ -383,149 +387,149 @@ namespace WinFormsApp1
                             incrementarColaVeteB = true;
                         }
                     }
-                        
-                        //ve si es fin de atencion
-                        //
-                        //
-                        else
-                        {
-                            //No hay cola
-                            //hat que verificar quien esta atendiendo al cliente que se va, viendo el tiempo anterior cual es elmenor, vamos a prender una vandera
-                            if ((int)listaAnterior[14] == 0 && seVaElAtendidoPorA)
-                            {
-                                lista.Add(0);
-                                lista.Add(0);
-                                lista.Add(listaAnterior[10]);
-                                lista.Add(listaAnterior[11]);
-                                lista.Add(0f);
-                                setEstadoLibreAprendiz = true;
-                                seVaElAtendidoPorA = false;
-                                List<Cliente> copia = new List<Cliente>(listaCliente);
-                                foreach (Cliente cliente in copia)
-                                {
-                                    if (cliente.getEstado() == "SAA")
-                                    {
-                                        listaCliente.Remove(cliente);
-                                    }
-                                }
-                        }
-                            if ((int)listaAnterior[16] == 0 && seVaElAtendidoPorVA)
-                            {
-                                lista.Add(0);
-                                lista.Add(0);
-                                lista.Add(0f);
-                                lista.Add(listaAnterior[11]);
-                                lista.Add(listaAnterior[12]);
-                                seVaElAtendidoPorA = false;
-                                List<Cliente> copia = new List<Cliente>(listaCliente);
-                                foreach (Cliente cliente in copia)
-                                {
-                                    if (cliente.getEstado() == "SAVA")
-                                    {
-                                        listaCliente.Remove(cliente);
-                                    }
-                                }
 
-                                setEstadoLibreVeteA = true;
-                                seVaElAtendidoPorVA = false;
-                            }
-                            if ((int)listaAnterior[18] == 0 && seVaElAtendidoPorVB)
+                    //ve si es fin de atencion
+                    //
+                    //
+                    else
+                    {
+                        //No hay cola
+                        //hat que verificar quien esta atendiendo al cliente que se va, viendo el tiempo anterior cual es elmenor, vamos a prender una vandera
+                        if ((int)listaAnterior[14] == 0 && seVaElAtendidoPorA)
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(0f);
+                            setEstadoLibreAprendiz = true;
+                            seVaElAtendidoPorA = false;
+                            List<Cliente> copia = new List<Cliente>(listaCliente);
+                            foreach (Cliente cliente in copia)
                             {
-                                lista.Add(0);
-                                lista.Add(0);
-                                lista.Add(listaAnterior[10]);
-                                lista.Add(0f);
-                                lista.Add(listaAnterior[12]);
-                                seVaElAtendidoPorA = false;
-                                List<Cliente> copia = new List<Cliente>(listaCliente);
-                                foreach (Cliente cliente in copia)
+                                if (cliente.getEstado() == "SAA")
                                 {
-                                    if (cliente.getEstado() == "SAVB")
-                                    {
-                                        listaCliente.Remove(cliente);
-                                    }
-                                }
-                            setEstadoLibreVeteB = true;
-                                seVaElAtendidoPorVB = false;
-                            }
-                            //Hay cola
-                            if ((int)listaAnterior[14] != 0 && seVaElAtendidoPorA)
-                            {
-                                float randomFinAtencion = (float)random.NextDouble();
-                                lista.Add(randomFinAtencion);
-                                float tiempoAtencion = desdeAprendiz + randomFinAtencion * (hastaAprendiz - desdeAprendiz);
-                                lista.Add(tiempoAtencion);
-                                lista.Add(listaAnterior[10]);
-                                lista.Add(listaAnterior[11]);
-                                lista.Add(tiempoAtencion + (float)lista[2]);
-                                decrementaColaApre = true;
-                                bool yapaso = false;
-                                List<Cliente> copia = new List<Cliente>(listaCliente);
-                                foreach (Cliente cliente in copia)
-                                {
-                                    if (cliente.getEstado() == "SAA")
-                                    {
-                                        listaCliente.Remove(cliente);
-                                    }
-                                    if (cliente.getEstado() == "EAA" && !yapaso)
-                                    {
-                                        yapaso = true;
-                                        cliente.setEstado("SAA");
-                                    }
-                                }
-                            }
-                            if ((int)listaAnterior[16] != 0 && seVaElAtendidoPorVA)
-                            {
-                                float randomFinAtencion = (float)random.NextDouble();
-                                lista.Add(randomFinAtencion);
-                                float tiempoAtencion = desdeVeterarnoA + randomFinAtencion * (hastaVeterarnoA - desdeVeterarnoA);
-                                lista.Add(tiempoAtencion);
-                                lista.Add(tiempoAtencion + (float)lista[2]);
-                                lista.Add(listaAnterior[11]);
-                                lista.Add(listaAnterior[12]);
-                                decrementaColaVeteA = true;
-                                bool yapaso = false;
-                                List<Cliente> copia = new List<Cliente>(listaCliente);
-                                foreach (Cliente cliente in copia)
-                                {
-                                    if (cliente.getEstado() == "SAVA")
-                                    {
-                                        listaCliente.Remove(cliente);
-                                    }
-                                    if (cliente.getEstado() == "EAVA" && !yapaso)
-                                    {
-                                        yapaso = true;
-                                        cliente.setEstado("SAVA");
-                                    }
-                                }
-                            }
-                            if ((int)listaAnterior[18] != 0 && seVaElAtendidoPorVB)
-                            {
-                                float randomFinAtencion = (float)random.NextDouble();
-                                lista.Add(randomFinAtencion);
-                                float tiempoAtencion = desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB - desdeVeterarnoB);
-                                lista.Add(tiempoAtencion);
-                                lista.Add(listaAnterior[10]);
-                                lista.Add(tiempoAtencion + (float)lista[2]);
-                                lista.Add(listaAnterior[12]);
-                                decrementaColaVeteB = true;
-                                bool yapaso = false;
-                                List<Cliente> copia = new List<Cliente>(listaCliente);
-                                foreach (Cliente cliente in copia)
-                                {
-                                    if (cliente.getEstado() == "SAVB")
-                                    {
-                                        listaCliente.Remove(cliente);
-                                    }
-                                    if (cliente.getEstado() == "EAVB" && !yapaso)
-                                    {
-                                        yapaso = true;
-                                        cliente.setEstado("SAVB");
-                                    }
+                                    listaCliente.Remove(cliente);
                                 }
                             }
                         }
-                    
+                        if ((int)listaAnterior[16] == 0 && seVaElAtendidoPorVA)
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(0f);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                            setEstadoLibreVeteA = true;
+                            seVaElAtendidoPorVA = false;
+                            List<Cliente> copia = new List<Cliente>(listaCliente);
+                            foreach (Cliente cliente in copia)
+                            {
+                                if (cliente.getEstado() == "SAVA")
+                                {
+                                    listaCliente.Remove(cliente);
+                                }
+                            }
+                        }
+                        if ((int)listaAnterior[18] == 0 && seVaElAtendidoPorVB)
+                        {
+                            lista.Add(0);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(0f);
+                            lista.Add(listaAnterior[12]);
+                            seVaElAtendidoPorVB = false;
+                            setEstadoLibreVeteB = true;
+                            List<Cliente> copia = new List<Cliente>(listaCliente);
+                            foreach (Cliente cliente in copia)
+                            {
+                                if (cliente.getEstado() == "SAVB")
+                                {
+                                    listaCliente.Remove(cliente);
+                                }
+                            }
+                        }
+                        //Hay cola
+                        if ((int)listaAnterior[14] != 0 && seVaElAtendidoPorA)
+                        {
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeAprendiz + randomFinAtencion * (hastaAprendiz - desdeAprendiz);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            decrementaColaApre = true;
+                            seVaElAtendidoPorA = false;
+                            bool yapaso = false;
+                            List<Cliente> copia = new List<Cliente>(listaCliente);
+                            foreach (Cliente cliente in copia)
+                            {
+                                if (cliente.getEstado() == "SAA")
+                                {
+                                    listaCliente.Remove(cliente);
+                                }
+                                if (cliente.getEstado() == "EAA" && !yapaso)
+                                {
+                                    yapaso = true;
+                                    cliente.setEstado("SAA");
+                                }
+                            }
+                        }
+                        if ((int)listaAnterior[16] != 0 && seVaElAtendidoPorVA)
+                        {
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeVeterarnoA + randomFinAtencion * (hastaVeterarnoA - desdeVeterarnoA);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
+                            decrementaColaVeteA = true;
+                            seVaElAtendidoPorVA = false;
+                            bool yapaso = false;
+                            List<Cliente> copia = new List<Cliente>(listaCliente);
+                            foreach (Cliente cliente in copia)
+                            {
+                                if (cliente.getEstado() == "SAVA")
+                                {
+                                    listaCliente.Remove(cliente);
+                                }
+                                if (cliente.getEstado() == "EAVA" && !yapaso)
+                                {
+                                    yapaso = true;
+                                    cliente.setEstado("SAVA");
+                                }
+                            }
+                        }
+                        if ((int)listaAnterior[18] != 0 && seVaElAtendidoPorVB)
+                        {
+                            float randomFinAtencion = (float)random.NextDouble();
+                            lista.Add(randomFinAtencion);
+                            float tiempoAtencion = desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB - desdeVeterarnoB);
+                            lista.Add(tiempoAtencion);
+                            lista.Add(listaAnterior[10]);
+                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            lista.Add(listaAnterior[12]);
+                            decrementaColaVeteB = true;
+                            seVaElAtendidoPorVB = false;
+                            bool yapaso = false;
+                            List<Cliente> copia = new List<Cliente>(listaCliente);
+                            foreach (Cliente cliente in copia)
+                            {
+                                if (cliente.getEstado() == "SAVB")
+                                {
+                                    listaCliente.Remove(cliente);
+                                }
+                                if (cliente.getEstado() == "EAVB" && !yapaso)
+                                {
+                                    yapaso = true;
+                                    cliente.setEstado("SAVB");
+                                }
+                            }
+                        }
+                    }
+
                 }
                 //Objetos permantes
                 if (i == 0)
@@ -549,7 +553,7 @@ namespace WinFormsApp1
                         lista.Add(listaAnterior[17]);
                         lista.Add(listaAnterior[18]);
                         setEstadoOcupadoAprendiz = false;
-                        tiempoLibreAprendiz = (float)listaAnterior[19] +((float)lista[2] - (float)listaAnterior[2]);
+                        tiempoLibreAprendiz = (float)listaAnterior[19] + ((float)lista[2] - (float)listaAnterior[2]);
                     }
                     else
                     {
@@ -563,7 +567,8 @@ namespace WinFormsApp1
                             lista.Add(listaAnterior[18]);
                             setEstadoOcupadoVeteranoA = false;
                         }
-                        else {
+                        else
+                        {
                             if (setEstadoOcupadoVeteranoB)
                             {
                                 lista.Add(listaAnterior[13]);
@@ -654,7 +659,7 @@ namespace WinFormsApp1
                     if (decrementaColaApre)
                     {
                         lista.Add("Ocupado");
-                        lista.Add((int)listaAnterior[14]-1);
+                        lista.Add((int)listaAnterior[14] - 1);
                         lista.Add(listaAnterior[15]);
                         lista.Add(listaAnterior[16]);
                         lista.Add(listaAnterior[17]);
@@ -720,6 +725,7 @@ namespace WinFormsApp1
                         listaCliente.Add(nuevoClienteAprendizEA);
                     }
                     atiendeAprendiz = false;
+                    esLlegadaCliente = false;
                 }
                 if (esLlegadaCliente && atiendeVeteA)
                 {
@@ -734,6 +740,7 @@ namespace WinFormsApp1
                         listaCliente.Add(nuevoClienteVeteAEA);
                     }
                     atiendeVeteA = false;
+                    esLlegadaCliente = false;
                 }
                 if (esLlegadaCliente && atiendeVeteB)
                 {
@@ -748,6 +755,7 @@ namespace WinFormsApp1
                         listaCliente.Add(nuevoClienteVetaBEA);
                     }
                     atiendeVeteB = false;
+                    esLlegadaCliente = false;
                 }
                 //la parte de eliminacion de clientes esta en la linea 347
                 List<Cliente> copyClie = new List<Cliente>(listaCliente);
@@ -766,7 +774,7 @@ namespace WinFormsApp1
                     lista.Add(cliente.getTiempoLlegada());
                     lista.Add(cliente.getTiempoEspera());
                 }
-            
+
                 MatrizMostrar.Add(lista);
                 if (filaMax < lista.Count())
                 {
@@ -776,20 +784,18 @@ namespace WinFormsApp1
                 {
                     acumuladorMinutos += ((float)lista[2] - (float)listaAnterior[2]);
                 }
-                if (i != 0 && (float)listaAnterior[2] > 480) {
-                    bastaClientes = true;
-                }
-                if (i != 0 && (float)listaAnterior[2] > 480 && (int)listaAnterior[14] == 0 && (int)listaAnterior[16] == 0 && (int)listaAnterior[18] == 0)
+                
+                if (i != 0 && (float)listaAnterior[2] > 480 && (string)lista[13] == "Libre" && (string)lista[15] == "Libre" && (string)lista[17] == "Libre")
                 {
                     contadorDia += 1;
                     i = -1;
-                    bastaClientes = false;
+                    
                 }
                 listaAnterior = lista;
                 lista = new List<object>();
                 seVaElAtendidoPorA = false;
                 seVaElAtendidoPorVA = false;
-                seVaElAtendidoPorVB= false;
+                seVaElAtendidoPorVB = false;
                 vanderaLlenoLlegadaCliente = false;
             }
         }
