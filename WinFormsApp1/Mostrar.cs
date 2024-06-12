@@ -25,7 +25,7 @@ namespace WinFormsApp1
         private void Mostrar_Load(object sender, EventArgs e)
         {
             // Agregar columnas con nombres específicos
-            string[] columnNames = { "Evento", "Dia", "Reloj", "RNDAtencion", "QuienAteiende", "RNDTiempo", "Tiempo", "TiempoLlegada", "RNDTiempo", "Tiempo", "A", "VA", "VB",
+            string[] columnNames = { "Evento", "Dia", "Reloj", "RNDAtencion", "QuienAteiende", "RNDTiempo", "Tiempo", "TiempoLlegada", "RNDTiempo", "Tiempo", "VA", "VB", "A",
                                  "EstadoAprendiz", "ColaAprendiz", "EstadoVeteranoA", "ColaVeteranoA", "EstadoVeteranoB", "ColaVeteranoB", "TiempoLibreA", "ColaMax" };
 
             foreach (string columnName in columnNames)

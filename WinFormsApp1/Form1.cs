@@ -63,7 +63,7 @@ namespace WinFormsApp1
             desdeClient = (int)txtDesdeCliente.Value;
             hastaClient = (int)txtHastaCliente.Value;
 
-            timmpoSimu = ((float)txtTiempoSumu.Value) * 60;
+            timmpoSimu = ((float)txtTiempoSumu.Value) * 60f;
 
             desdeItera = (int)txtDesdeItera.Value;
 
@@ -73,8 +73,8 @@ namespace WinFormsApp1
 
             if (MatrizMostrar.Count() >= (desdeItera + hastaItera))
             {
-                List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)desdeItera + (int)hastaItera);
-                Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
+                List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)hastaItera);
+                Mostrar mostrar = new Mostrar(subMatrix, filaMax);
                 mostrar.Show();
             }
             else
@@ -116,7 +116,7 @@ namespace WinFormsApp1
             bool seVaElAtendidoPorVB = false;
             bool seVaElAtendidoPorA = false;
             int contadorDia = 0;
-            int maxIt = 100;
+            bool bastaClientes = false;
 
             for (int i = 0; acumuladorMinutos < timmpoSimu; i++)
             {
@@ -137,7 +137,7 @@ namespace WinFormsApp1
                     // Encontrar el valor mínimo de la lista que no tiene ceros
                     float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                    if (minimo.HasValue && minimo == LlegadaCliente && (float)listaAnterior[2] < 480f)
+                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
                     {
                         // Ejecutar las líneas de código solamente si LlegadaCliente es la menor entre las variables que no son 0
                         lista.Add("LlegadaCliente");
@@ -172,13 +172,12 @@ namespace WinFormsApp1
                     // Encontrar el valor mínimo de la lista que no tiene ceros
                     float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                    if (minimo.HasValue && minimo == LlegadaCliente && (float)listaAnterior[2] < 480f)
+                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
                     {
                         lista.Add((float)listaAnterior[7]);
                     }
                     else
                     {
-
                         if (minimo.HasValue && minimo == finAtencionVeteranoA)
                         {
                             lista.Add((float)listaAnterior[10]);
@@ -195,7 +194,6 @@ namespace WinFormsApp1
                             seVaElAtendidoPorA = true;
                         }
                     }
-
                 }
 
                 //RNDQuienAtiende
@@ -206,7 +204,17 @@ namespace WinFormsApp1
                 }
                 else
                 {
-                    if (i == 1)
+                    //para llegadaCliente
+                    float llegadaVeteranoa = (float)listaAnterior[10];
+                    float llegadaVeteranoB = (float)listaAnterior[11];
+                    float llegadaAprendis = (float)listaAnterior[12];
+                    float LlegadaCliente = (float)listaAnterior[7];
+                    List<float> variables = new List<float> { (float)llegadaVeteranoa, (float)llegadaVeteranoB, (float)llegadaAprendis, (float)LlegadaCliente };
+                    List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
+                    // Encontrar el valor mínimo de la lista que no tiene ceros
+                    float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
+
+                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
                     {
                         float randomQuienAtiende = (float)random.NextDouble();
                         lista.Add(randomQuienAtiende);
@@ -233,60 +241,28 @@ namespace WinFormsApp1
                             }
                         }
                     }
+                    //Para Fin Atencion
                     else
                     {
-                        //para llegadaCliente
-                        float llegadaVeteranoa = (float)listaAnterior[10];
-                        float llegadaVeteranoB = (float)listaAnterior[11];
-                        float llegadaAprendis = (float)listaAnterior[12];
-                        float LlegadaCliente = (float)listaAnterior[7];
-                        List<float> variables = new List<float> { (float)llegadaVeteranoa, (float)llegadaVeteranoB, (float)llegadaAprendis, (float)LlegadaCliente };
-                        List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
-                        // Encontrar el valor mínimo de la lista que no tiene ceros
-                        float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
-
-                        if (minimo.HasValue && minimo == LlegadaCliente && (float)listaAnterior[2] < 480f)
+                        if ((string)lista[0] == "FinAtencion" && !bastaClientes)
                         {
-                            float randomQuienAtiende = (float)random.NextDouble();
-                            lista.Add(randomQuienAtiende);
-
-                            if (randomQuienAtiende < probAprendiz)
-                            {
-                                lista.Add("Aprendiz");
-                                atiendeAprendiz = true;
-                            }
-                            else
-                            {
-                                if (randomQuienAtiende < probAprendiz + probVeteranoA)
-                                {
-                                    lista.Add("VeteranoA");
-                                    atiendeVeteA = true;
-                                }
-                                else
-                                {
-                                    if (randomQuienAtiende < probAprendiz + probVeteranoA + probVeteranoB)
-                                    {
-                                        lista.Add("VeteranoB");
-                                        atiendeVeteB = true;
-                                    }
-                                }
-                            }
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(listaAnterior[7]);
+                            vanderaLlenoLlegadaCliente = true;
                         }
-                        //Para Fin Atencion
                         else
                         {
-                            if ((string)lista[0] == "FinAtencion")
-                            {
-                                lista.Add(0f);
-                                lista.Add(0f);
-                                lista.Add(0f);
-                                lista.Add(0f);
-                                lista.Add(listaAnterior[7]);
-                                vanderaLlenoLlegadaCliente = true;
-                            }
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            lista.Add(0f);
+                            vanderaLlenoLlegadaCliente = true;
                         }
                     }
-
                 }
                 //RNDTiempoLlegada
                 if (!vanderaLlenoLlegadaCliente)
@@ -321,7 +297,7 @@ namespace WinFormsApp1
                     // Encontrar el valor mínimo de la lista que no tiene ceros
                     float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                    if (minimo.HasValue && minimo == LlegadaCliente && (float)listaAnterior[2] < 480f)
+                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
                     {
                         //controla si no hay gente en cola
                         if (lista[4] == "Aprendiz" && (string)listaAnterior[13] == "Libre")
@@ -808,12 +784,15 @@ namespace WinFormsApp1
                 {
                     acumuladorMinutos += ((float)lista[2] - (float)listaAnterior[2]);
                 }
-
-                if (i != 0 && (float)listaAnterior[2] > 480f && (string)lista[13] == "Libre" && (string)lista[15] == "Libre" && (string)lista[17] == "Libre" && (int)lista[14] == 0 && (int)lista[16] == 0 && (int)lista[18] == 0)
+                if ((float)lista[2] > (480f - (float)hastaClient))
+                {
+                    bastaClientes = true;
+                }
+                if (i != 0 && bastaClientes && (string)lista[13] == "Libre" && (string)lista[15] == "Libre" && (string)lista[17] == "Libre" && (int)lista[14] == 0 && (int)lista[16] == 0 && (int)lista[18] == 0)
                 {
                     contadorDia += 1;
                     i = -1;
-
+                    bastaClientes = false;
                 }
                 listaAnterior = lista;
                 lista = new List<object>();
