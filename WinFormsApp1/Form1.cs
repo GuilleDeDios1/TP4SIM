@@ -70,7 +70,7 @@ namespace WinFormsApp1
             hastaItera = (int)txtHastaItera.Value;
 
             simular();
-            
+
             if (MatrizMostrar.Count() >= (desdeItera + hastaItera))
             {
                 List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)desdeItera + (int)hastaItera);
@@ -82,7 +82,8 @@ namespace WinFormsApp1
                 MessageBox.Show("La simulacion no alcanzo las lineas a mostrar");
             }
         }
-        public void mostrar(List<List<Object>>matrizMostrar) {
+        public void mostrar(List<List<Object>> matrizMostrar)
+        {
             Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
             mostrar.Show();
         }
@@ -115,9 +116,8 @@ namespace WinFormsApp1
             bool seVaElAtendidoPorVB = false;
             bool seVaElAtendidoPorA = false;
             int contadorDia = 0;
-            bool bastaClientes = false;
             int maxIt = 100;
-            
+
             for (int i = 0; acumuladorMinutos < timmpoSimu; i++)
             {
                 //agrega evento
@@ -137,7 +137,7 @@ namespace WinFormsApp1
                     // Encontrar el valor mínimo de la lista que no tiene ceros
                     float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
+                    if (minimo.HasValue && minimo == LlegadaCliente && (float)listaAnterior[2] < 480f)
                     {
                         // Ejecutar las líneas de código solamente si LlegadaCliente es la menor entre las variables que no son 0
                         lista.Add("LlegadaCliente");
@@ -172,7 +172,7 @@ namespace WinFormsApp1
                     // Encontrar el valor mínimo de la lista que no tiene ceros
                     float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
+                    if (minimo.HasValue && minimo == LlegadaCliente && (float)listaAnterior[2] < 480f)
                     {
                         lista.Add((float)listaAnterior[7]);
                     }
@@ -245,7 +245,7 @@ namespace WinFormsApp1
                         // Encontrar el valor mínimo de la lista que no tiene ceros
                         float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                        if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
+                        if (minimo.HasValue && minimo == LlegadaCliente && (float)listaAnterior[2] < 480f)
                         {
                             float randomQuienAtiende = (float)random.NextDouble();
                             lista.Add(randomQuienAtiende);
@@ -321,7 +321,7 @@ namespace WinFormsApp1
                     // Encontrar el valor mínimo de la lista que no tiene ceros
                     float? minimo = variablesNoCero.Count > 0 ? (float?)variablesNoCero.Min() : null;
 
-                    if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
+                    if (minimo.HasValue && minimo == LlegadaCliente && (float)listaAnterior[2] < 480f)
                     {
                         //controla si no hay gente en cola
                         if (lista[4] == "Aprendiz" && (string)listaAnterior[13] == "Libre")
@@ -462,6 +462,7 @@ namespace WinFormsApp1
                             decrementaColaApre = true;
                             seVaElAtendidoPorA = false;
                             bool yapaso = false;
+                            int idClienteEstado = 0;
                             List<Cliente> copia = new List<Cliente>(listaCliente);
                             foreach (Cliente cliente in copia)
                             {
@@ -472,6 +473,13 @@ namespace WinFormsApp1
                                 if (cliente.getEstado() == "EAA" && !yapaso)
                                 {
                                     yapaso = true;
+                                    idClienteEstado = cliente.getId();
+                                }
+                            }
+                            foreach(Cliente cliente in listaCliente)
+                            {
+                                if(cliente.getId() == idClienteEstado)
+                                {
                                     cliente.setEstado("SAA");
                                 }
                             }
@@ -488,6 +496,7 @@ namespace WinFormsApp1
                             decrementaColaVeteA = true;
                             seVaElAtendidoPorVA = false;
                             bool yapaso = false;
+                            int idClienteEstado = 0;
                             List<Cliente> copia = new List<Cliente>(listaCliente);
                             foreach (Cliente cliente in copia)
                             {
@@ -498,6 +507,13 @@ namespace WinFormsApp1
                                 if (cliente.getEstado() == "EAVA" && !yapaso)
                                 {
                                     yapaso = true;
+                                    idClienteEstado = cliente.getId();
+                                }
+                            }
+                            foreach (Cliente cliente in listaCliente)
+                            {
+                                if (cliente.getId() == idClienteEstado)
+                                {
                                     cliente.setEstado("SAVA");
                                 }
                             }
@@ -514,6 +530,7 @@ namespace WinFormsApp1
                             decrementaColaVeteB = true;
                             seVaElAtendidoPorVB = false;
                             bool yapaso = false;
+                            int idClienteEstado = 0;
                             List<Cliente> copia = new List<Cliente>(listaCliente);
                             foreach (Cliente cliente in copia)
                             {
@@ -524,6 +541,13 @@ namespace WinFormsApp1
                                 if (cliente.getEstado() == "EAVB" && !yapaso)
                                 {
                                     yapaso = true;
+                                    idClienteEstado = cliente.getId();
+                                }
+                            }
+                            foreach (Cliente cliente in listaCliente)
+                            {
+                                if (cliente.getId() == idClienteEstado)
+                                {
                                     cliente.setEstado("SAVB");
                                 }
                             }
@@ -784,12 +808,12 @@ namespace WinFormsApp1
                 {
                     acumuladorMinutos += ((float)lista[2] - (float)listaAnterior[2]);
                 }
-                
-                if (i != 0 && (float)listaAnterior[2] > 480 && (string)lista[13] == "Libre" && (string)lista[15] == "Libre" && (string)lista[17] == "Libre")
+
+                if (i != 0 && (float)listaAnterior[2] > 480f && (string)lista[13] == "Libre" && (string)lista[15] == "Libre" && (string)lista[17] == "Libre" && (int)lista[14] == 0 && (int)lista[16] == 0 && (int)lista[18] == 0)
                 {
                     contadorDia += 1;
                     i = -1;
-                    
+
                 }
                 listaAnterior = lista;
                 lista = new List<object>();
