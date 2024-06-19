@@ -49,6 +49,9 @@ namespace WinFormsApp1
                 dataGridView.Rows.Add(rowData);
             }
 
+            // agregar estadisticas
+            Estadisticas frmEstadisticas = new Estadisticas(((float)matrizMostrar[(matrizMostrar.Count() - 1)][19]/ (float)matrizMostrar[(matrizMostrar.Count() - 1)][2])*100, (int)matrizMostrar[(matrizMostrar.Count() - 1)][20]);
+            frmEstadisticas.Show();
         }
     }
 }
