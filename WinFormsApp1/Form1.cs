@@ -793,51 +793,38 @@ namespace WinFormsApp1
                 
                 //Sacampos los clientes que estan en listaAnterior
 
-                if (listaAnterior.Count > 20) {
-                    bool setId = false;
-                    bool setEstado = false;
-                    bool setTiempoLlegada = false;
+                if (listaAnterior.Count > 20) 
+                {
                     int posicion = 0;
                     Cliente cli = new Cliente();
                     for (int j = 21; j < listaAnterior.Count; j++)
                     {
-                        if (listaAnterior[j] is not "") {
-                            
-
-                            if (setTiempoLlegada && listaAnterior[j] is float)
-                            {
-                                cli.setTiempoEspera((float)listaAnterior[j]);
-                                Posicion pos = new Posicion(cli, posicion);
-                                paraClientes.Add(pos);
-                                posicion = 0;
-                                cli = new Cliente();
-                                setId = false;
-                                setEstado = false;
-                                setTiempoLlegada = false;
-                            }
-                            if (setEstado && listaAnterior[j] is float) {
-                                cli.setTiempoLlegada((float)listaAnterior[j]);
-                                setTiempoLlegada = true;
-                            }
-                            if (setId && listaAnterior[j] is string)
-                            {
-                                cli.setEstado((string)listaAnterior[j]);
-                                setEstado = true;
-                            }
+                        // aca
+                        if (listaAnterior[j] is not "") 
+                        {
                             if (listaAnterior[j] is int)
                             {
-                                cli.setId((int)listaAnterior[j]);
-                                setId = true;
-                                posicion = j;
+                               posicion = j;
+                               foreach(Cliente cliente in listaCliente)
+                               {
+                                    if ((int)listaAnterior[j] == cliente.getId())
+                                    {
+                                        Posicion pos = new Posicion(cliente, posicion);
+                                        paraClientes.Add(pos);
+                                    }
+                               }
                             }
                         }
                     }
                 }
                 //Mostrar
-                for (int l = 21; l < listaAnterior.Count(); l++) {
+                for (int l = 21; l < listaAnterior.Count(); l++)
+                {
                     lista.Add("");
                 }
-                foreach (Posicion pos in paraClientes) {
+
+                foreach (Posicion pos in paraClientes)
+                {
                     lista[pos.getPosicion()] = pos.getCliente().getId();
                     lista[pos.getPosicion()+1] = pos.getCliente().getEstado();
                     lista[pos.getPosicion()+2] = pos.getCliente().getTiempoLlegada();
@@ -845,32 +832,41 @@ namespace WinFormsApp1
                 }
 
                 List<Cliente> copyClient = new List<Cliente>(listaCliente);
-                foreach (Cliente cliente in listaCliente) {
-                    foreach (Posicion pos in paraClientes) {
-                        if (cliente.getId() == pos.getCliente().getId()) {
+                foreach (Cliente cliente in listaCliente)
+                {
+                    foreach (Posicion pos in paraClientes) 
+                    {
+                        if (cliente.getId() == pos.getCliente().getId()) 
+                        {
                             copyClient.Remove(cliente);
                         }
                     }
                 }
+
                 this.paraClientes = new List<Posicion>();
-                List<Object> copyLista = new List<object> {lista};
-                bool seAgrego = false;
-                foreach (Cliente cli in copyClient) {
-                    for (int a = 21; a < copyLista.Count; a += 4) {
-                        if (copyLista[a] is "") {
+                List<Object> copyLista = new List<object>(lista);
+                foreach (Cliente cli in copyClient)
+                {
+                    bool seAgrego = false;
+                    bool yaPaso = false;
+                    for (int a = 21; a < copyLista.Count; a += 4)
+                    {
+                        if (!yaPaso && copyLista[a] is "")
+                        {
                             lista[a] = cli.getId();
                             lista[a+1] = cli.getEstado();
                             lista[a+2] = cli.getTiempoLlegada();
                             lista[a+3] = cli.getTiempoEspera();
                             seAgrego = true;
+                            yaPaso = true;
                         }
                     }
-                    if(!seAgrego) {
+                    if(!seAgrego)
+                    {
                         lista.Add(cli.getId());
                         lista.Add(cli.getEstado());
                         lista.Add(cli.getTiempoLlegada());
                         lista.Add(cli.getTiempoEspera());
-                        seAgrego = false;
                     }
                 }
                 
