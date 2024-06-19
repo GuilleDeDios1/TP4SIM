@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace WinFormsApp1
 {
@@ -20,6 +21,11 @@ namespace WinFormsApp1
             IdCliente i = IdCliente.getInstance();
             this.ID = i.GetIdClient();
         }
+
+        public Cliente()
+        {
+        }
+
         public string getEstado() { return estado; }
         public float getTiempoLlegada() { return tiempoLlegada; }
 
@@ -43,6 +49,16 @@ namespace WinFormsApp1
             }
             return false;
 
+        }
+
+        public void setId(int id) {
+            this.ID = id;
+        }
+        public void setTiempoLlegada(float tiempoLlegada) {
+            this.tiempoLlegada = tiempoLlegada; 
+        }
+        public void setTiempoEspera(float tiempoEspera) {
+            this.tiempoEspera= tiempoEspera;
         }
     }
 }

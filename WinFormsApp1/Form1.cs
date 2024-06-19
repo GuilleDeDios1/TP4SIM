@@ -1,5 +1,6 @@
 using System;
 using System.Drawing.Drawing2D;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -40,7 +41,7 @@ namespace WinFormsApp1
         private float hastaItera;
 
         private int filaMax;
-
+        private List<Posicion> paraClientes = new List<Posicion>();
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -789,15 +790,90 @@ namespace WinFormsApp1
                         listaCliente.Remove(cliente);
                     }
                 }
-                //recorre y agrega datos de los clientes
-                foreach (Cliente cliente in listaCliente)
-                {
-                    lista.Add(cliente.getId());
-                    lista.Add(cliente.getEstado());
-                    lista.Add(cliente.getTiempoLlegada());
-                    lista.Add(cliente.getTiempoEspera());
+                
+                //Sacampos los clientes que estan en listaAnterior
+
+                if (listaAnterior.Count > 20) {
+                    bool setId = false;
+                    bool setEstado = false;
+                    bool setTiempoLlegada = false;
+                    int posicion = 0;
+                    Cliente cli = new Cliente();
+                    for (int j = 21; j < listaAnterior.Count; j++)
+                    {
+                        if (listaAnterior[j] is not "") {
+                            
+
+                            if (setTiempoLlegada && listaAnterior[j] is float)
+                            {
+                                cli.setTiempoEspera((float)listaAnterior[j]);
+                                Posicion pos = new Posicion(cli, posicion);
+                                paraClientes.Add(pos);
+                                posicion = 0;
+                                cli = new Cliente();
+                                setId = false;
+                                setEstado = false;
+                                setTiempoLlegada = false;
+                            }
+                            if (setEstado && listaAnterior[j] is float) {
+                                cli.setTiempoLlegada((float)listaAnterior[j]);
+                                setTiempoLlegada = true;
+                            }
+                            if (setId && listaAnterior[j] is string)
+                            {
+                                cli.setEstado((string)listaAnterior[j]);
+                                setEstado = true;
+                            }
+                            if (listaAnterior[j] is int)
+                            {
+                                cli.setId((int)listaAnterior[j]);
+                                setId = true;
+                                posicion = j;
+                            }
+                        }
+                    }
+                }
+                //Mostrar
+                for (int l = 21; l < listaAnterior.Count(); l++) {
+                    lista.Add("");
+                }
+                foreach (Posicion pos in paraClientes) {
+                    lista[pos.getPosicion()] = pos.getCliente().getId();
+                    lista[pos.getPosicion()+1] = pos.getCliente().getEstado();
+                    lista[pos.getPosicion()+2] = pos.getCliente().getTiempoLlegada();
+                    lista[pos.getPosicion()+3] = pos.getCliente().getTiempoEspera();
                 }
 
+                List<Cliente> copyClient = new List<Cliente>(listaCliente);
+                foreach (Cliente cliente in listaCliente) {
+                    foreach (Posicion pos in paraClientes) {
+                        if (cliente.getId() == pos.getCliente().getId()) {
+                            copyClient.Remove(cliente);
+                        }
+                    }
+                }
+                this.paraClientes = new List<Posicion>();
+                List<Object> copyLista = new List<object> {lista};
+                bool seAgrego = false;
+                foreach (Cliente cli in copyClient) {
+                    for (int a = 21; a < copyLista.Count; a += 4) {
+                        if (copyLista[a] is "") {
+                            lista[a] = cli.getId();
+                            lista[a+1] = cli.getEstado();
+                            lista[a+2] = cli.getTiempoLlegada();
+                            lista[a+3] = cli.getTiempoEspera();
+                            seAgrego = true;
+                        }
+                    }
+                    if(!seAgrego) {
+                        lista.Add(cli.getId());
+                        lista.Add(cli.getEstado());
+                        lista.Add(cli.getTiempoLlegada());
+                        lista.Add(cli.getTiempoEspera());
+                        seAgrego = false;
+                    }
+                }
+                
                 MatrizMostrar.Add(lista);
                 if (filaMax < lista.Count())
                 {
