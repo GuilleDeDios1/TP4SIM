@@ -69,30 +69,38 @@ namespace WinFormsApp1
 
             hastaItera = int.Parse(txtHastaItera.Text);
 
-            if((probVeteranoA + probVeteranoB + probAprendiz) == 1f)
+            if (desdeAprendiz >= 0 && hastaAprendiz >= 0 && desdeVeterarnoA >= 0 && hastaVeterarnoA >= 0 && desdeVeterarnoB >= 0 && hastaVeterarnoB >= 0 && hastaAprendiz > desdeAprendiz && hastaVeterarnoA > desdeVeterarnoA && hastaVeterarnoB > desdeVeterarnoB && hastaClient > desdeClient)
             {
-                simular();
-
-                if (MatrizMostrar.Count() >= (desdeItera + hastaItera))
+                if ((probVeteranoA + probVeteranoB + probAprendiz) == 1f)
                 {
-                    List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)hastaItera);
-                    if (checkBox1.Checked) {
-                        Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
-                        mostrar.Show();
+                    simular();
+
+                    if (MatrizMostrar.Count() >= (desdeItera + hastaItera))
+                    {
+                        List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)hastaItera);
+                        if (checkBox1.Checked)
+                        {
+                            Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
+                            mostrar.Show();
+                        }
+                        else
+                        {
+                            Mostrar mostrar = new Mostrar(subMatrix, filaMax);
+                            mostrar.Show();
+                        }
                     }
-                    else {
-                        Mostrar mostrar = new Mostrar(subMatrix, filaMax);
-                        mostrar.Show();
+                    else
+                    {
+                        MessageBox.Show("La simulacion no alcanzo las lineas a mostrar");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("La simulacion no alcanzo las lineas a mostrar");
+                    MessageBox.Show("La suma de probabilidades no da 1");
                 }
             }
-            else
-            {
-                MessageBox.Show("La suma de probabilidades no da 1");
+            else {
+                MessageBox.Show("Ningun desde puede ser mayor o igual a un hasta");
             }
 
             
