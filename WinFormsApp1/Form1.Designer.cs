@@ -62,12 +62,12 @@
             this.label14 = new System.Windows.Forms.Label();
             this.btnGenerar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtCoefB = new System.Windows.Forms.TextBox();
             this.txtCoefA = new System.Windows.Forms.TextBox();
             this.txth = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.txtCoefB = new System.Windows.Forms.TextBox();
             this.gbPeluqueros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterA)).BeginInit();
@@ -328,6 +328,7 @@
             this.txtHastaItera.Name = "txtHastaItera";
             this.txtHastaItera.Size = new System.Drawing.Size(100, 23);
             this.txtHastaItera.TabIndex = 9;
+            this.txtHastaItera.Text = "0";
             this.txtHastaItera.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtHastaItera_KeyPress);
             // 
             // txtDesdeItera
@@ -336,6 +337,7 @@
             this.txtDesdeItera.Name = "txtDesdeItera";
             this.txtDesdeItera.Size = new System.Drawing.Size(100, 23);
             this.txtDesdeItera.TabIndex = 8;
+            this.txtDesdeItera.Text = "0";
             this.txtDesdeItera.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDesdeItera_KeyPress);
             // 
             // txtTiempoSumu
@@ -344,6 +346,7 @@
             this.txtTiempoSumu.Name = "txtTiempoSumu";
             this.txtTiempoSumu.Size = new System.Drawing.Size(100, 23);
             this.txtTiempoSumu.TabIndex = 7;
+            this.txtTiempoSumu.Text = "10";
             this.txtTiempoSumu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTiempoSumu_KeyPress);
             // 
             // groupBox2
@@ -446,12 +449,21 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Datos RK";
             // 
+            // txtCoefB
+            // 
+            this.txtCoefB.Location = new System.Drawing.Point(246, 25);
+            this.txtCoefB.Name = "txtCoefB";
+            this.txtCoefB.Size = new System.Drawing.Size(39, 23);
+            this.txtCoefB.TabIndex = 5;
+            this.txtCoefB.Text = "0,09";
+            // 
             // txtCoefA
             // 
             this.txtCoefA.Location = new System.Drawing.Point(139, 26);
             this.txtCoefA.Name = "txtCoefA";
             this.txtCoefA.Size = new System.Drawing.Size(37, 23);
             this.txtCoefA.TabIndex = 4;
+            this.txtCoefA.Text = "0,08";
             // 
             // txth
             // 
@@ -459,6 +471,7 @@
             this.txth.Name = "txth";
             this.txth.Size = new System.Drawing.Size(37, 23);
             this.txth.TabIndex = 3;
+            this.txth.Text = "0,1";
             // 
             // label17
             // 
@@ -486,13 +499,6 @@
             this.label15.Size = new System.Drawing.Size(14, 15);
             this.label15.TabIndex = 0;
             this.label15.Text = "h";
-            // 
-            // txtCoefB
-            // 
-            this.txtCoefB.Location = new System.Drawing.Point(246, 25);
-            this.txtCoefB.Name = "txtCoefB";
-            this.txtCoefB.Size = new System.Drawing.Size(39, 23);
-            this.txtCoefB.TabIndex = 5;
             // 
             // Form1
             // 

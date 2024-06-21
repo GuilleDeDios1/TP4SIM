@@ -364,10 +364,9 @@ namespace WinFormsApp1
                             lista.Add(complejidad);
                             lista.Add(listaAnterior[10]);
                             //RK
-                            RK rk = new RK();
-                            lista.Add(rk.RungeKutta4(0f,0f,h,complejidad,coefA,coefB) + (float)lista[2]);
+                            lista.Add(RK.RungeKutta4(0f,0f,h,complejidad,coefA,coefB) + (float)lista[2]);
                             lista.Add(listaAnterior[12]);
-                            setEstadoOcupadoVeteranoB = true;s
+                            setEstadoOcupadoVeteranoB = true;
                         }
                         //si hay cola
                         if (lista[4] == "Aprendiz" && (string)listaAnterior[13] == "Ocupado")
@@ -537,8 +536,7 @@ namespace WinFormsApp1
                             float complejidad = (float)Math.Truncate(desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB + 1f - desdeVeterarnoB));
                             lista.Add(complejidad);
                             lista.Add(listaAnterior[10]);
-                            RK rk = new RK();
-                            lista.Add((rk.RungeKutta4(0f, 0f, h, complejidad, coefA, coefB)) + (float)lista[2]);
+                            lista.Add((RK.RungeKutta4(0f, 0f, h, complejidad, coefA, coefB)) + (float)lista[2]);
                             lista.Add(listaAnterior[12]);
                             decrementaColaVeteB = true;
                             seVaElAtendidoPorVB = false;
