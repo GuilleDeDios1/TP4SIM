@@ -14,6 +14,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WinFormsApp1
-build_property.ProjectDir = C:\Users\Francisco\Desktop\2024\2024\Simulacion - 2024\Trabajos\TP4SIM\WinFormsApp1\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = E:\UTN4\SIM\TPs\TP4SIM\WinFormsApp1\

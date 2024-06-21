@@ -42,6 +42,11 @@ namespace WinFormsApp1
 
         private int filaMax;
         private List<Posicion> paraClientes = new List<Posicion>();
+
+        //RK
+        private float h;
+        private float coefA;
+        private float coefB;
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -69,6 +74,11 @@ namespace WinFormsApp1
             desdeItera = int.Parse(txtDesdeItera.Text);
 
             hastaItera = int.Parse(txtHastaItera.Text);
+
+            h = float.Parse(txth.Text);
+            coefA= float.Parse(txtCoefA.Text);
+            coefB = float.Parse(txtCoefB.Text);
+            
 
             if (desdeAprendiz >= 0 && hastaAprendiz >= 0 && desdeVeterarnoA >= 0 && hastaVeterarnoA >= 0 && desdeVeterarnoB >= 0 && hastaVeterarnoB >= 0 && hastaAprendiz > desdeAprendiz && hastaVeterarnoA > desdeVeterarnoA && hastaVeterarnoB > desdeVeterarnoB && hastaClient > desdeClient)
             {
@@ -350,12 +360,14 @@ namespace WinFormsApp1
                         {
                             float randomFinAtencion = (float)random.NextDouble();
                             lista.Add(randomFinAtencion);
-                            float tiempoAtencion = desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB - desdeVeterarnoB);
-                            lista.Add(tiempoAtencion);
+                            float complejidad = (float)Math.Truncate(desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB+1f - desdeVeterarnoB));
+                            lista.Add(complejidad);
                             lista.Add(listaAnterior[10]);
-                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            //RK
+                            RK rk = new RK();
+                            lista.Add(rk.RungeKutta4(0f,0f,h,complejidad,coefA,coefB) + (float)lista[2]);
                             lista.Add(listaAnterior[12]);
-                            setEstadoOcupadoVeteranoB = true;
+                            setEstadoOcupadoVeteranoB = true;s
                         }
                         //si hay cola
                         if (lista[4] == "Aprendiz" && (string)listaAnterior[13] == "Ocupado")
@@ -522,10 +534,11 @@ namespace WinFormsApp1
                         {
                             float randomFinAtencion = (float)random.NextDouble();
                             lista.Add(randomFinAtencion);
-                            float tiempoAtencion = desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB - desdeVeterarnoB);
-                            lista.Add(tiempoAtencion);
+                            float complejidad = (float)Math.Truncate(desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB + 1f - desdeVeterarnoB));
+                            lista.Add(complejidad);
                             lista.Add(listaAnterior[10]);
-                            lista.Add(tiempoAtencion + (float)lista[2]);
+                            RK rk = new RK();
+                            lista.Add((rk.RungeKutta4(0f, 0f, h, complejidad, coefA, coefB)) + (float)lista[2]);
                             lista.Add(listaAnterior[12]);
                             decrementaColaVeteB = true;
                             seVaElAtendidoPorVB = false;

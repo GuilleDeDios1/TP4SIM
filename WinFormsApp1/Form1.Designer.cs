@@ -49,6 +49,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.txtHastaItera = new System.Windows.Forms.TextBox();
             this.txtDesdeItera = new System.Windows.Forms.TextBox();
             this.txtTiempoSumu = new System.Windows.Forms.TextBox();
@@ -60,7 +61,13 @@
             this.txtDesdeCliente = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.btnGenerar = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtCoefA = new System.Windows.Forms.TextBox();
+            this.txth = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtCoefB = new System.Windows.Forms.TextBox();
             this.gbPeluqueros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaVeterA)).BeginInit();
@@ -72,6 +79,7 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaCliente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeCliente)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbPeluqueros
@@ -94,7 +102,7 @@
             this.gbPeluqueros.Controls.Add(this.label4);
             this.gbPeluqueros.Location = new System.Drawing.Point(12, 193);
             this.gbPeluqueros.Name = "gbPeluqueros";
-            this.gbPeluqueros.Size = new System.Drawing.Size(288, 160);
+            this.gbPeluqueros.Size = new System.Drawing.Size(307, 160);
             this.gbPeluqueros.TabIndex = 0;
             this.gbPeluqueros.TabStop = false;
             this.gbPeluqueros.Text = "Peluqueros";
@@ -299,10 +307,20 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(288, 175);
+            this.groupBox1.Size = new System.Drawing.Size(307, 175);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Simulacion";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(57, 150);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(181, 19);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Mostrar simulacion completa";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // txtHastaItera
             // 
@@ -336,9 +354,9 @@
             this.groupBox2.Controls.Add(this.txtHastaCliente);
             this.groupBox2.Controls.Add(this.txtDesdeCliente);
             this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Location = new System.Drawing.Point(12, 359);
+            this.groupBox2.Location = new System.Drawing.Point(12, 453);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(288, 97);
+            this.groupBox2.Size = new System.Drawing.Size(307, 97);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cliente";
@@ -405,7 +423,7 @@
             // 
             // btnGenerar
             // 
-            this.btnGenerar.Location = new System.Drawing.Point(219, 474);
+            this.btnGenerar.Location = new System.Drawing.Point(245, 556);
             this.btnGenerar.Name = "btnGenerar";
             this.btnGenerar.Size = new System.Drawing.Size(75, 23);
             this.btnGenerar.TabIndex = 9;
@@ -413,21 +431,75 @@
             this.btnGenerar.UseVisualStyleBackColor = true;
             this.btnGenerar.Click += new System.EventHandler(this.btnGenerar_Click);
             // 
-            // checkBox1
+            // groupBox3
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(57, 150);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(181, 19);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "Mostrar simulacion completa";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.groupBox3.Controls.Add(this.txtCoefB);
+            this.groupBox3.Controls.Add(this.txtCoefA);
+            this.groupBox3.Controls.Add(this.txth);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Location = new System.Drawing.Point(12, 367);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(308, 64);
+            this.groupBox3.TabIndex = 10;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Datos RK";
+            // 
+            // txtCoefA
+            // 
+            this.txtCoefA.Location = new System.Drawing.Point(139, 26);
+            this.txtCoefA.Name = "txtCoefA";
+            this.txtCoefA.Size = new System.Drawing.Size(37, 23);
+            this.txtCoefA.TabIndex = 4;
+            // 
+            // txth
+            // 
+            this.txth.Location = new System.Drawing.Point(36, 26);
+            this.txth.Name = "txth";
+            this.txth.Size = new System.Drawing.Size(37, 23);
+            this.txth.TabIndex = 3;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(193, 29);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(45, 15);
+            this.label17.TabIndex = 2;
+            this.label17.Text = "Coef. B";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(87, 29);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(46, 15);
+            this.label16.TabIndex = 1;
+            this.label16.Text = "Coef. A";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(16, 29);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(14, 15);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "h";
+            // 
+            // txtCoefB
+            // 
+            this.txtCoefB.Location = new System.Drawing.Point(246, 25);
+            this.txtCoefB.Name = "txtCoefB";
+            this.txtCoefB.Size = new System.Drawing.Size(39, 23);
+            this.txtCoefB.TabIndex = 5;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(321, 509);
+            this.ClientSize = new System.Drawing.Size(339, 594);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btnGenerar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -449,6 +521,8 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtHastaCliente)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesdeCliente)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -488,5 +562,12 @@
         private TextBox txtDesdeItera;
         private TextBox txtTiempoSumu;
         private CheckBox checkBox1;
+        private GroupBox groupBox3;
+        private TextBox txtCoefA;
+        private TextBox txth;
+        private Label label17;
+        private Label label16;
+        private Label label15;
+        private TextBox txtCoefB;
     }
 }
