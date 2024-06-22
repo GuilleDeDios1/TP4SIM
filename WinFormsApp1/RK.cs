@@ -15,14 +15,14 @@ namespace WinFormsApp1
             return (coefA * (float) Math.Sqrt(t + coefB));
         }
 
-        public static float RungeKutta4(float t0, float y0, float h, float C,float coefA,float coefB)
+        public static float RungeKutta4(float h, float C,float coefA,float coefB,float hastaComplejidad)
         {
             if (tablaRK.Count == 0)
             {
-                float t = t0;
-                float y = y0;
+                float t = 0;
+                float y = 0;
                 int i = 0;
-                while (y <= C)
+                while (y <= hastaComplejidad)
                 {
                     if (i >= tablaRK.Count)
                     {
@@ -50,10 +50,6 @@ namespace WinFormsApp1
                     tablaRK[i].Add(y);
 
                     i++;
-                    if (y > coefB)
-                    {
-                        break;
-                    }
                 }
             }
             float devolver = 0f;
