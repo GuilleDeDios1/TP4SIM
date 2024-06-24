@@ -22,7 +22,7 @@ namespace WinFormsApp1
                 float t = 0;
                 float y = 0;
                 int i = 0;
-                while (y <= hastaComplejidad)
+                while (y <= hastaComplejidad+h) //se le suma h para que siempre el y supere el maximo de compligidad porque al ser <= es muy pro probable que justo llegue hasta el hasta complegidad
                 {
                     if (i >= tablaRK.Count)
                     {
@@ -51,6 +51,8 @@ namespace WinFormsApp1
 
                     i++;
                 }
+                MostrarRK mk = new MostrarRK(tablaRK);
+                mk.Show();
             }
             float devolver = 0f;
             bool paso = false;
