@@ -1,6 +1,6 @@
 ﻿namespace WinFormsApp1
 {
-    partial class Mostrar
+    partial class Simulacion
     {
         /// <summary>
         /// Required designer variable.
@@ -43,14 +43,15 @@
             dataGridView.Size = new Size(800, 450);
             dataGridView.TabIndex = 0;
             // 
-            // Mostrar
+            // Simulacion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(dataGridView);
-            Name = "Mostrar";
+            Name = "Simulacion";
             Text = "Mostrar";
+            FormClosed += Simulacion_FormClosed;
             Load += Mostrar_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);

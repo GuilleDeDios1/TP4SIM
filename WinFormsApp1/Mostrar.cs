@@ -10,15 +10,15 @@ using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
-    public partial class Mostrar : Form
+    public partial class Simulacion : Form
     {
         private List<List<object>> matrizMostrar;
         private int filaMax;
-        public Mostrar(List<List<object>> matrizMostrar, int filaMax)
+        public Simulacion(List<List<object>> matrizMostrar, int filaMax)
         {
             InitializeComponent();
-            this.matrizMostrar= matrizMostrar;
-            this.filaMax= filaMax;
+            this.matrizMostrar = matrizMostrar;
+            this.filaMax = filaMax;
 
         }
 
@@ -34,7 +34,7 @@ namespace WinFormsApp1
             }
 
             // Agregar columnas sin nombre hasta filaMax
-            int additionalColumns = (filaMax - columnNames.Length)/4;
+            int additionalColumns = (filaMax - columnNames.Length) / 4;
             for (int i = 0; i < additionalColumns; i++)
             {
                 dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "Id");
@@ -50,8 +50,13 @@ namespace WinFormsApp1
             }
 
             // agregar estadisticas
-            Estadisticas frmEstadisticas = new Estadisticas(((float)matrizMostrar[(matrizMostrar.Count() - 1)][19]/ (float)matrizMostrar[(matrizMostrar.Count() - 1)][2])*100, (int)matrizMostrar[(matrizMostrar.Count() - 1)][20]);
+            Estadisticas frmEstadisticas = new Estadisticas(((float)matrizMostrar[(matrizMostrar.Count() - 1)][19] / (float)matrizMostrar[(matrizMostrar.Count() - 1)][2]) * 100, (int)matrizMostrar[(matrizMostrar.Count() - 1)][20]);
             frmEstadisticas.Show();
+        }
+
+        private void Simulacion_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
         }
     }
 }
