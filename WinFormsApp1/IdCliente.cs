@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinFormsApp1.Clases
+namespace WinFormsApp1
 {
-    internal class IdClientes
+    internal class IdCliente
     {
-        private static IdClientes _instance;
+        private static IdCliente _instance;
         private static int idClient = -1;
 
         // Constructor privado para evitar instanciación directa
-        private IdClientes() { }
+        private IdCliente() { }
 
         // Método estático para obtener la instancia única
-        public static IdClientes getInstance()
+        public static IdCliente getInstance()
         {
             if (_instance == null)
             {
-                _instance = new IdClientes();
+                _instance = new IdCliente();
             }
 
             idClient += 1;

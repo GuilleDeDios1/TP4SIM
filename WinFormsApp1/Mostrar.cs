@@ -10,27 +10,22 @@ using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
-    public partial class Mostrar : Form
+    public partial class Simulacion : Form
     {
         private List<List<object>> matrizMostrar;
         private int filaMax;
-        public Mostrar(List<List<object>> matrizMostrar, int filaMax)
+        public Simulacion(List<List<object>> matrizMostrar, int filaMax)
         {
             InitializeComponent();
-            this.matrizMostrar= matrizMostrar;
-            this.filaMax= filaMax;
-            foreach (var row in matrizMostrar)
-            {
-                var rowData = new object[filaMax];
-                row.CopyTo(rowData);
-                dataGridView.Rows.Add(rowData);
-            }
+            this.matrizMostrar = matrizMostrar;
+            this.filaMax = filaMax;
+
         }
 
         private void Mostrar_Load(object sender, EventArgs e)
         {
             // Agregar columnas con nombres específicos
-            string[] columnNames = { "Evento", "Dia", "Reloj", "RNDAtencion", "QuienAteiende", "RNDTiempo", "Tiempo", "TiempoLlegada", "RNDTiempo", "Tiempo", "A", "VA", "VB",
+            string[] columnNames = { "Evento", "Dia", "Reloj", "RNDAtencion", "QuienAteiende", "RNDTiempo", "Tiempo", "TiempoLlegada", "RNDTiempo","Complejidad", "Tiempo", "VA", "VB", "A",
                                  "EstadoAprendiz", "ColaAprendiz", "EstadoVeteranoA", "ColaVeteranoA", "EstadoVeteranoB", "ColaVeteranoB", "TiempoLibreA", "ColaMax" };
 
             foreach (string columnName in columnNames)
@@ -39,12 +34,29 @@ namespace WinFormsApp1
             }
 
             // Agregar columnas sin nombre hasta filaMax
-            int additionalColumns = filaMax - columnNames.Length;
+            int additionalColumns = (filaMax - columnNames.Length) / 4;
             for (int i = 0; i < additionalColumns; i++)
             {
-                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "");
+                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "Id");
+                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "Estado");
+                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "TiempoLlegada");
+                dataGridView.Columns.Add($"columna_{i + columnNames.Length + 1}", "TiempoEspera");
+            }
+            foreach (var row in matrizMostrar)
+            {
+                var rowData = new object[filaMax];
+                row.CopyTo(rowData);
+                dataGridView.Rows.Add(rowData);
             }
 
+            // agregar estadisticas
+            Estadisticas frmEstadisticas = new Estadisticas(((float)matrizMostrar[(matrizMostrar.Count() - 1)][20]/ (float)matrizMostrar[(matrizMostrar.Count() - 1)][2])*100, (int)matrizMostrar[(matrizMostrar.Count() - 1)][21]);
+            frmEstadisticas.Show();
+        }
+
+        private void Simulacion_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
         }
     }
 }
