@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -16,9 +17,7 @@ namespace WinFormsApp1
         private Random random = new Random();
 
         //para mostrar
-        private List<Object> lista = new List<object>();
-        private List<Object> listaAnterior = new List<object>();
-        private List<List<Object>> MatrizMostrar = new List<List<object>>();
+        
 
         //datosLlegadaCliente
         private int desdeClient;
@@ -40,8 +39,6 @@ namespace WinFormsApp1
         private float desdeItera;
         private float hastaItera;
 
-        private int filaMax;
-        private List<Posicion> paraClientes = new List<Posicion>();
 
         //RK
         private float h;
@@ -78,25 +75,27 @@ namespace WinFormsApp1
             h = float.Parse(txth.Text);
             coefA= float.Parse(txtCoefA.Text);
             coefB = float.Parse(txtCoefB.Text);
-            
 
+            simular();
+        }
+
+        public void mostrar(List<List<object>> MatrizMostrar, int filaMax)
+        {
             if (desdeAprendiz >= 0 && hastaAprendiz >= 0 && desdeVeterarnoA >= 0 && hastaVeterarnoA >= 0 && desdeVeterarnoB >= 0 && hastaVeterarnoB >= 0 && hastaAprendiz > desdeAprendiz && hastaVeterarnoA > desdeVeterarnoA && hastaVeterarnoB > desdeVeterarnoB && hastaClient > desdeClient)
             {
                 if ((probVeteranoA + probVeteranoB + probAprendiz) == 1f)
                 {
-                    simular();
-
                     if (MatrizMostrar.Count() >= (desdeItera + hastaItera))
                     {
                         List<List<object>> subMatrix = MatrizMostrar.GetRange((int)desdeItera, (int)hastaItera);
                         if (checkBox1.Checked)
                         {
-                            Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
+                            Simulacion mostrar = new Simulacion(MatrizMostrar, filaMax);
                             mostrar.Show();
                         }
                         else
                         {
-                            Mostrar mostrar = new Mostrar(subMatrix, filaMax);
+                            Simulacion mostrar = new Simulacion(subMatrix, filaMax);
                             mostrar.Show();
                         }
                     }
@@ -110,20 +109,20 @@ namespace WinFormsApp1
                     MessageBox.Show("La suma de probabilidades no da 1");
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("Ningun desde puede ser mayor o igual a un hasta");
             }
-
-            
-        }
-        public void mostrar(List<List<Object>> matrizMostrar)
-        {
-            Mostrar mostrar = new Mostrar(MatrizMostrar, filaMax);
-            mostrar.Show();
         }
 
         public void simular()
         {
+            RK rk = new RK();
+            int filaMax = 0;
+            List<Posicion> paraClientes = new List<Posicion>();
+            List<List<Object>> MatrizMostrar = new List<List<Object>>();
+            List<Object> lista = new List<Object>();
+            List<Object> listaAnterior = new List<Object>();
             bool setEstadoOcupadoAprendiz = false;
             bool vanderaLlenoLlegadaCliente = false;
             bool setEstadoOcupadoVeteranoA = false;
@@ -870,7 +869,7 @@ namespace WinFormsApp1
                     }
                 }
 
-                this.paraClientes = new List<Posicion>();
+                paraClientes = new List<Posicion>();
                 List<Object> copyLista = new List<object>(lista);
                 foreach (Cliente cli in copyClient)
                 {
@@ -923,6 +922,7 @@ namespace WinFormsApp1
                 seVaElAtendidoPorVB = false;
                 vanderaLlenoLlegadaCliente = false;
             }
+            mostrar(MatrizMostrar, filaMax);
         }
 
         private void txtTiempoSumu_KeyPress(object sender, KeyPressEventArgs e)
