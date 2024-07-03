@@ -151,7 +151,7 @@ namespace WinFormsApp1
             bool seVaElAtendidoPorA = false;
             int contadorDia = 0;
             bool bastaClientes = false;
-
+            RK rK = new RK();
             for (int i = 0; acumuladorMinutos < timmpoSimu; i++)
             {
                 //agrega evento
@@ -162,9 +162,9 @@ namespace WinFormsApp1
                 //agrega evento
                 else
                 {
-                    float llegadaVeteranoa = (float)listaAnterior[10];
-                    float llegadaVeteranoB = (float)listaAnterior[11];
-                    float llegadaAprendis = (float)listaAnterior[12];
+                    float llegadaVeteranoa = (float)listaAnterior[11];
+                    float llegadaVeteranoB = (float)listaAnterior[12];
+                    float llegadaAprendis = (float)listaAnterior[13];
                     float LlegadaCliente = (float)listaAnterior[7];
                     List<float> variables = new List<float> { (float)llegadaVeteranoa, (float)llegadaVeteranoB, (float)llegadaAprendis, (float)LlegadaCliente };
                     List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
@@ -197,9 +197,9 @@ namespace WinFormsApp1
                 {
                     //verifica en la lista anterior cual es el menor tiempo
 
-                    float finAtencionVeteranoA = (float)listaAnterior[10];
-                    float finAtencionVeteranoB = (float)listaAnterior[11];
-                    float finAtencionAprendiz = (float)listaAnterior[12];
+                    float finAtencionVeteranoA = (float)listaAnterior[11];
+                    float finAtencionVeteranoB = (float)listaAnterior[12];
+                    float finAtencionAprendiz = (float)listaAnterior[13];
                     float LlegadaCliente = (float)listaAnterior[7];
                     List<float> variables = new List<float> { (float)finAtencionVeteranoA, (float)finAtencionVeteranoB, (float)finAtencionAprendiz, (float)LlegadaCliente };
                     List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
@@ -214,17 +214,17 @@ namespace WinFormsApp1
                     {
                         if (minimo.HasValue && minimo == finAtencionVeteranoA)
                         {
-                            lista.Add((float)listaAnterior[10]);
+                            lista.Add((float)listaAnterior[11]);
                             seVaElAtendidoPorVA = true;
                         }
                         else if (minimo.HasValue && minimo == finAtencionVeteranoB)
                         {
-                            lista.Add((float)listaAnterior[11]);
+                            lista.Add((float)listaAnterior[12]);
                             seVaElAtendidoPorVB = true;
                         }
                         else
                         {
-                            lista.Add((float)listaAnterior[12]);
+                            lista.Add((float)listaAnterior[13]);
                             seVaElAtendidoPorA = true;
                         }
                     }
@@ -239,9 +239,9 @@ namespace WinFormsApp1
                 else
                 {
                     //para llegadaCliente
-                    float llegadaVeteranoa = (float)listaAnterior[10];
-                    float llegadaVeteranoB = (float)listaAnterior[11];
-                    float llegadaAprendis = (float)listaAnterior[12];
+                    float llegadaVeteranoa = (float)listaAnterior[11];
+                    float llegadaVeteranoB = (float)listaAnterior[12];
+                    float llegadaAprendis = (float)listaAnterior[13];
                     float LlegadaCliente = (float)listaAnterior[7];
                     List<float> variables = new List<float> { (float)llegadaVeteranoa, (float)llegadaVeteranoB, (float)llegadaAprendis, (float)LlegadaCliente };
                     List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
@@ -307,9 +307,11 @@ namespace WinFormsApp1
                     lista.Add(tiempo);
                     lista.Add(tiempo + (float)lista[2]);
                 }
+                //AGREGAR COMPLEGIDAD
                 //finAtencion
                 if (i == 0)
                 {
+                    lista.Add(0f);
                     lista.Add(0f);
                     lista.Add(0f);
                     lista.Add(0f);
@@ -322,9 +324,9 @@ namespace WinFormsApp1
                     //
                     //
 
-                    float llegadaVeteranoa = (float)listaAnterior[10];
-                    float llegadaVeteranoB = (float)listaAnterior[11];
-                    float llegadaAprendis = (float)listaAnterior[12];
+                    float llegadaVeteranoa = (float)listaAnterior[11];
+                    float llegadaVeteranoB = (float)listaAnterior[12];
+                    float llegadaAprendis = (float)listaAnterior[13];
                     float LlegadaCliente = (float)listaAnterior[7];
                     List<float> variables = new List<float> { (float)llegadaVeteranoa, (float)llegadaVeteranoB, (float)llegadaAprendis, (float)LlegadaCliente };
                     List<float> variablesNoCero = variables.Where(v => v != 0f).ToList();
@@ -334,67 +336,74 @@ namespace WinFormsApp1
                     if (minimo.HasValue && minimo == LlegadaCliente && !bastaClientes)
                     {
                         //controla si no hay gente en cola
-                        if (lista[4] == "Aprendiz" && (string)listaAnterior[13] == "Libre")
+                        if (lista[4] == "Aprendiz" && (string)listaAnterior[14] == "Libre")
                         {
                             float randomFinAtencion = (float)random.NextDouble();
                             lista.Add(randomFinAtencion);
+                            lista.Add(0f);
                             float tiempoAtencion = desdeAprendiz + randomFinAtencion * (hastaAprendiz - desdeAprendiz);
                             lista.Add(tiempoAtencion);
-                            lista.Add(listaAnterior[10]);
                             lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
                             lista.Add(tiempoAtencion + (float)lista[2]);
                             setEstadoOcupadoAprendiz = true;
                         }
-                        if (lista[4] == "VeteranoA" && (string)listaAnterior[15] == "Libre")
+                        if (lista[4] == "VeteranoA" && (string)listaAnterior[16] == "Libre")
                         {
                             float randomFinAtencion = (float)random.NextDouble();
                             lista.Add(randomFinAtencion);
+                            lista.Add(0f);
                             float tiempoAtencion = desdeVeterarnoA + randomFinAtencion * (hastaVeterarnoA - desdeVeterarnoA);
                             lista.Add(tiempoAtencion);
                             lista.Add(tiempoAtencion + (float)lista[2]);
-                            lista.Add(listaAnterior[11]);
                             lista.Add(listaAnterior[12]);
+                            lista.Add(listaAnterior[13]);
                             setEstadoOcupadoVeteranoA = true;
                         }
-                        if (lista[4] == "VeteranoB" && (string)listaAnterior[17] == "Libre")
+                        if (lista[4] == "VeteranoB" && (string)listaAnterior[18] == "Libre")
                         {
                             float randomFinAtencion = (float)random.NextDouble();
                             lista.Add(randomFinAtencion);
-                            float complejidad = (float)Math.Truncate(desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB+1f - desdeVeterarnoB));
+                            float complejidad = (float) (desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB - desdeVeterarnoB));
                             lista.Add(complejidad);
-                            lista.Add(listaAnterior[10]);
+                            float tiempo = rK.RungeKutta4(h, complejidad, coefA, coefB, hastaVeterarnoB);
+                            lista.Add(tiempo);
+                            lista.Add(listaAnterior[11]);
                             //RK
-                            lista.Add(RK.RungeKutta4(h,complejidad,coefA,coefB,hastaVeterarnoB) + (float)lista[2]);
-                            lista.Add(listaAnterior[12]);
+                            lista.Add(tiempo + (float)lista[2]);
+                            lista.Add(listaAnterior[13]);
                             setEstadoOcupadoVeteranoB = true;
                         }
                         //si hay cola
-                        if (lista[4] == "Aprendiz" && (string)listaAnterior[13] == "Ocupado")
+                        if (lista[4] == "Aprendiz" && (string)listaAnterior[14] == "Ocupado")
                         {
                             lista.Add(0);
                             lista.Add(0);
-                            lista.Add(listaAnterior[10]);
+                            lista.Add(0);
                             lista.Add(listaAnterior[11]);
                             lista.Add(listaAnterior[12]);
+                            lista.Add(listaAnterior[13]);
                             incrementarColaApre = true;
 
                         }
-                        if (lista[4] == "VeteranoA" && (string)listaAnterior[15] == "Ocupado")
+                        if (lista[4] == "VeteranoA" && (string)listaAnterior[16] == "Ocupado")
                         {
                             lista.Add(0);
                             lista.Add(0);
-                            lista.Add(listaAnterior[10]);
+                            lista.Add(0);
                             lista.Add(listaAnterior[11]);
                             lista.Add(listaAnterior[12]);
+                            lista.Add(listaAnterior[13]);
                             incrementarColaVeteA = true;
                         }
-                        if (lista[4] == "VeteranoB" && (string)listaAnterior[17] == "Ocupado")
+                        if (lista[4] == "VeteranoB" && (string)listaAnterior[18] == "Ocupado")
                         {
                             lista.Add(0);
                             lista.Add(0);
-                            lista.Add(listaAnterior[10]);
+                            lista.Add(0);
                             lista.Add(listaAnterior[11]);
                             lista.Add(listaAnterior[12]);
+                            lista.Add(listaAnterior[13]);
                             incrementarColaVeteB = true;
                         }
                     }
@@ -406,12 +415,13 @@ namespace WinFormsApp1
                     {
                         //No hay cola
                         //hat que verificar quien esta atendiendo al cliente que se va, viendo el tiempo anterior cual es elmenor, vamos a prender una vandera
-                        if ((int)listaAnterior[14] == 0 && seVaElAtendidoPorA)
+                        if ((int)listaAnterior[15] == 0 && seVaElAtendidoPorA)
                         {
                             lista.Add(0);
                             lista.Add(0);
-                            lista.Add(listaAnterior[10]);
+                            lista.Add(0);
                             lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
                             lista.Add(0f);
                             setEstadoLibreAprendiz = true;
                             seVaElAtendidoPorA = false;
@@ -424,13 +434,14 @@ namespace WinFormsApp1
                                 }
                             }
                         }
-                        if ((int)listaAnterior[16] == 0 && seVaElAtendidoPorVA)
+                        if ((int)listaAnterior[17] == 0 && seVaElAtendidoPorVA)
                         {
                             lista.Add(0);
                             lista.Add(0);
+                            lista.Add(0);
                             lista.Add(0f);
-                            lista.Add(listaAnterior[11]);
                             lista.Add(listaAnterior[12]);
+                            lista.Add(listaAnterior[13]);
                             setEstadoLibreVeteA = true;
                             seVaElAtendidoPorVA = false;
                             List<Cliente> copia = new List<Cliente>(listaCliente);
@@ -442,13 +453,14 @@ namespace WinFormsApp1
                                 }
                             }
                         }
-                        if ((int)listaAnterior[18] == 0 && seVaElAtendidoPorVB)
+                        if ((int)listaAnterior[19] == 0 && seVaElAtendidoPorVB)
                         {
                             lista.Add(0);
                             lista.Add(0);
-                            lista.Add(listaAnterior[10]);
+                            lista.Add(0);
+                            lista.Add(listaAnterior[11]);
                             lista.Add(0f);
-                            lista.Add(listaAnterior[12]);
+                            lista.Add(listaAnterior[13]);
                             seVaElAtendidoPorVB = false;
                             setEstadoLibreVeteB = true;
                             List<Cliente> copia = new List<Cliente>(listaCliente);
@@ -461,14 +473,15 @@ namespace WinFormsApp1
                             }
                         }
                         //Hay cola
-                        if ((int)listaAnterior[14] != 0 && seVaElAtendidoPorA)
+                        if ((int)listaAnterior[15] != 0 && seVaElAtendidoPorA)
                         {
                             float randomFinAtencion = (float)random.NextDouble();
                             lista.Add(randomFinAtencion);
+                            lista.Add(0);
                             float tiempoAtencion = desdeAprendiz + randomFinAtencion * (hastaAprendiz - desdeAprendiz);
                             lista.Add(tiempoAtencion);
-                            lista.Add(listaAnterior[10]);
                             lista.Add(listaAnterior[11]);
+                            lista.Add(listaAnterior[12]);
                             lista.Add(tiempoAtencion + (float)lista[2]);
                             decrementaColaApre = true;
                             seVaElAtendidoPorA = false;
@@ -495,15 +508,16 @@ namespace WinFormsApp1
                                 }
                             }
                         }
-                        if ((int)listaAnterior[16] != 0 && seVaElAtendidoPorVA)
+                        if ((int)listaAnterior[17] != 0 && seVaElAtendidoPorVA)
                         {
                             float randomFinAtencion = (float)random.NextDouble();
                             lista.Add(randomFinAtencion);
+                            lista.Add(0);
                             float tiempoAtencion = desdeVeterarnoA + randomFinAtencion * (hastaVeterarnoA - desdeVeterarnoA);
                             lista.Add(tiempoAtencion);
                             lista.Add(tiempoAtencion + (float)lista[2]);
-                            lista.Add(listaAnterior[11]);
                             lista.Add(listaAnterior[12]);
+                            lista.Add(listaAnterior[13]);
                             decrementaColaVeteA = true;
                             seVaElAtendidoPorVA = false;
                             bool yapaso = false;
@@ -529,15 +543,17 @@ namespace WinFormsApp1
                                 }
                             }
                         }
-                        if ((int)listaAnterior[18] != 0 && seVaElAtendidoPorVB)
+                        if ((int)listaAnterior[19] != 0 && seVaElAtendidoPorVB)
                         {
                             float randomFinAtencion = (float)random.NextDouble();
                             lista.Add(randomFinAtencion);
-                            float complejidad = (float)Math.Truncate(desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB + 1f - desdeVeterarnoB));
+                            float complejidad = (float) (desdeVeterarnoB + randomFinAtencion * (hastaVeterarnoB - desdeVeterarnoB));
                             lista.Add(complejidad);
-                            lista.Add(listaAnterior[10]);
-                            lista.Add((RK.RungeKutta4(h, complejidad, coefA, coefB,hastaVeterarnoB)) + (float)lista[2]);
-                            lista.Add(listaAnterior[12]);
+                            float tiempo = rK.RungeKutta4(h, complejidad, coefA, coefB, hastaVeterarnoB);
+                            lista.Add(tiempo);
+                            lista.Add(listaAnterior[11]);
+                            lista.Add(tiempo + (float)lista[2]);
+                            lista.Add(listaAnterior[13]);
                             decrementaColaVeteB = true;
                             seVaElAtendidoPorVB = false;
                             bool yapaso = false;
@@ -583,33 +599,33 @@ namespace WinFormsApp1
                     {
                         lista.Add("Ocupado");
                         lista.Add(0);
-                        lista.Add(listaAnterior[15]);
                         lista.Add(listaAnterior[16]);
                         lista.Add(listaAnterior[17]);
                         lista.Add(listaAnterior[18]);
+                        lista.Add(listaAnterior[19]);
                         setEstadoOcupadoAprendiz = false;
-                        tiempoLibreAprendiz = (float)listaAnterior[19] + ((float)lista[2] - (float)listaAnterior[2]);
+                        tiempoLibreAprendiz = (float)listaAnterior[20] + ((float)lista[2] - (float)listaAnterior[2]);
                     }
                     else
                     {
                         if (setEstadoOcupadoVeteranoA)
                         {
-                            lista.Add(listaAnterior[13]);
                             lista.Add(listaAnterior[14]);
+                            lista.Add(listaAnterior[15]);
                             lista.Add("Ocupado");
                             lista.Add(0);
-                            lista.Add(listaAnterior[17]);
                             lista.Add(listaAnterior[18]);
+                            lista.Add(listaAnterior[19]);
                             setEstadoOcupadoVeteranoA = false;
                         }
                         else
                         {
                             if (setEstadoOcupadoVeteranoB)
                             {
-                                lista.Add(listaAnterior[13]);
                                 lista.Add(listaAnterior[14]);
                                 lista.Add(listaAnterior[15]);
                                 lista.Add(listaAnterior[16]);
+                                lista.Add(listaAnterior[17]);
                                 lista.Add("Ocupado");
                                 lista.Add(0);
                                 setEstadoOcupadoVeteranoB = false;
@@ -620,35 +636,35 @@ namespace WinFormsApp1
                     if (incrementarColaApre)
                     {
                         lista.Add("Ocupado");
-                        lista.Add((int)listaAnterior[14] + 1);
-                        lista.Add(listaAnterior[15]);
+                        lista.Add((int)listaAnterior[15] + 1);
                         lista.Add(listaAnterior[16]);
                         lista.Add(listaAnterior[17]);
                         lista.Add(listaAnterior[18]);
+                        lista.Add(listaAnterior[19]);
                         incrementarColaApre = false;
                     }
                     else
                     {
                         if (incrementarColaVeteA)
                         {
-                            lista.Add(listaAnterior[13]);
                             lista.Add(listaAnterior[14]);
+                            lista.Add(listaAnterior[15]);
                             lista.Add("Ocupado");
-                            lista.Add((int)listaAnterior[16] + 1);
-                            lista.Add(listaAnterior[17]);
+                            lista.Add((int)listaAnterior[17] + 1);
                             lista.Add(listaAnterior[18]);
+                            lista.Add(listaAnterior[19]);
                             incrementarColaVeteA = false;
                         }
                         else
                         {
                             if (incrementarColaVeteB)
                             {
-                                lista.Add(listaAnterior[13]);
                                 lista.Add(listaAnterior[14]);
                                 lista.Add(listaAnterior[15]);
                                 lista.Add(listaAnterior[16]);
+                                lista.Add(listaAnterior[17]);
                                 lista.Add("Ocupado");
-                                lista.Add((int)listaAnterior[18] + 1);
+                                lista.Add((int)listaAnterior[19] + 1);
                                 incrementarColaVeteB = false;
                             }
                         }
@@ -658,32 +674,32 @@ namespace WinFormsApp1
                     {
                         lista.Add("Libre");
                         lista.Add(0);
-                        lista.Add(listaAnterior[15]);
                         lista.Add(listaAnterior[16]);
                         lista.Add(listaAnterior[17]);
                         lista.Add(listaAnterior[18]);
+                        lista.Add(listaAnterior[19]);
                         setEstadoLibreAprendiz = false;
                     }
                     else
                     {
                         if (setEstadoLibreVeteA)
                         {
-                            lista.Add(listaAnterior[13]);
                             lista.Add(listaAnterior[14]);
+                            lista.Add(listaAnterior[15]);
                             lista.Add("Libre");
                             lista.Add(0);
-                            lista.Add(listaAnterior[17]);
                             lista.Add(listaAnterior[18]);
+                            lista.Add(listaAnterior[19]);
                             setEstadoLibreVeteA = false;
                         }
                         else
                         {
                             if (setEstadoLibreVeteB)
                             {
-                                lista.Add(listaAnterior[13]);
                                 lista.Add(listaAnterior[14]);
                                 lista.Add(listaAnterior[15]);
                                 lista.Add(listaAnterior[16]);
+                                lista.Add(listaAnterior[17]);
                                 lista.Add("Libre");
                                 lista.Add(0);
                                 setEstadoLibreVeteB = false;
@@ -694,35 +710,35 @@ namespace WinFormsApp1
                     if (decrementaColaApre)
                     {
                         lista.Add("Ocupado");
-                        lista.Add((int)listaAnterior[14] - 1);
-                        lista.Add(listaAnterior[15]);
+                        lista.Add((int)listaAnterior[15] - 1);
                         lista.Add(listaAnterior[16]);
                         lista.Add(listaAnterior[17]);
                         lista.Add(listaAnterior[18]);
+                        lista.Add(listaAnterior[19]);
                         decrementaColaApre = false;
                     }
                     else
                     {
                         if (decrementaColaVeteA)
                         {
-                            lista.Add(listaAnterior[13]);
                             lista.Add(listaAnterior[14]);
+                            lista.Add(listaAnterior[15]);
                             lista.Add("Ocupado");
-                            lista.Add((int)listaAnterior[16] - 1);
-                            lista.Add(listaAnterior[17]);
+                            lista.Add((int)listaAnterior[17] - 1);
                             lista.Add(listaAnterior[18]);
+                            lista.Add(listaAnterior[19]);
                             decrementaColaVeteA = false;
                         }
                         else
                         {
                             if (decrementaColaVeteB)
                             {
-                                lista.Add(listaAnterior[13]);
                                 lista.Add(listaAnterior[14]);
                                 lista.Add(listaAnterior[15]);
                                 lista.Add(listaAnterior[16]);
+                                lista.Add(listaAnterior[17]);
                                 lista.Add("Ocupado");
-                                lista.Add((int)listaAnterior[18] - 1);
+                                lista.Add((int)listaAnterior[19] - 1);
                                 decrementaColaVeteB = false;
                             }
                         }
@@ -735,21 +751,21 @@ namespace WinFormsApp1
                 }
                 else
                 {
-                    if ((string)listaAnterior[13] == "Libre" && (string)lista[13] == "Libre")
+                    if ((string)listaAnterior[14] == "Libre" && (string)lista[14] == "Libre")
                     {
-                        tiempoLibreAprendiz = (float)listaAnterior[19] + ((float)lista[2] - (float)listaAnterior[2]);
+                        tiempoLibreAprendiz = (float)listaAnterior[20] + ((float)lista[2] - (float)listaAnterior[2]);
                     }
                     lista.Add(tiempoLibreAprendiz);
-                    if (colaMax < ((int)lista[14] + (int)lista[16] + (int)lista[18]))
+                    if (colaMax < ((int)lista[15] + (int)lista[17] + (int)lista[19]))
                     {
-                        colaMax = (int)lista[14] + (int)lista[16] + (int)lista[18];
+                        colaMax = (int)lista[15] + (int)lista[17] + (int)lista[19];
                     }
                     lista.Add(colaMax);
                 }
                 //Cosas de clientes si sos peluquero no te metas
                 if (esLlegadaCliente && atiendeAprendiz)
                 {
-                    if ((int)lista[14] == 0 && (string)listaAnterior[13] == "Libre")
+                    if ((int)lista[15] == 0 && (string)listaAnterior[14] == "Libre")
                     {
                         Cliente nuevoClienteAprendizSA = new Cliente("SAA", (float)lista[2]);
                         listaCliente.Add(nuevoClienteAprendizSA);
@@ -764,7 +780,7 @@ namespace WinFormsApp1
                 }
                 if (esLlegadaCliente && atiendeVeteA)
                 {
-                    if ((int)lista[16] == 0 && (string)listaAnterior[15] == "Libre")
+                    if ((int)lista[17] == 0 && (string)listaAnterior[16] == "Libre")
                     {
                         Cliente nuevoClienteVeteASA = new Cliente("SAVA", (float)lista[2]);
                         listaCliente.Add(nuevoClienteVeteASA);
@@ -779,7 +795,7 @@ namespace WinFormsApp1
                 }
                 if (esLlegadaCliente && atiendeVeteB)
                 {
-                    if ((int)lista[18] == 0 && (string)listaAnterior[17] == "Libre")
+                    if ((int)lista[19] == 0 && (string)listaAnterior[18] == "Libre")
                     {
                         Cliente nuevoClienteVetaBSA = new Cliente("SAVB", (float)lista[2]);
                         listaCliente.Add(nuevoClienteVetaBSA);
@@ -804,11 +820,11 @@ namespace WinFormsApp1
                 
                 //Sacampos los clientes que estan en listaAnterior
 
-                if (listaAnterior.Count > 20) 
+                if (listaAnterior.Count > 21) 
                 {
                     int posicion = 0;
                     Cliente cli = new Cliente();
-                    for (int j = 21; j < listaAnterior.Count; j++)
+                    for (int j = 22; j < listaAnterior.Count; j++)
                     {
                         // aca
                         if (listaAnterior[j] is not "") 
@@ -829,7 +845,7 @@ namespace WinFormsApp1
                     }
                 }
                 //Mostrar
-                for (int l = 21; l < listaAnterior.Count(); l++)
+                for (int l = 22; l < listaAnterior.Count(); l++)
                 {
                     lista.Add("");
                 }
@@ -860,7 +876,7 @@ namespace WinFormsApp1
                 {
                     bool seAgrego = false;
                     bool yaPaso = false;
-                    for (int a = 21; a < copyLista.Count; a += 4)
+                    for (int a = 22; a < copyLista.Count; a += 4)
                     {
                         if (!yaPaso && copyLista[a] is "")
                         {
@@ -894,7 +910,7 @@ namespace WinFormsApp1
                 {
                     bastaClientes = true;
                 }
-                if (i != 0 && bastaClientes && (string)lista[13] == "Libre" && (string)lista[15] == "Libre" && (string)lista[17] == "Libre" && (int)lista[14] == 0 && (int)lista[16] == 0 && (int)lista[18] == 0)
+                if (i != 0 && bastaClientes && (string)lista[14] == "Libre" && (string)lista[16] == "Libre" && (string)lista[18] == "Libre" && (int)lista[15] == 0 && (int)lista[17] == 0 && (int)lista[19] == 0)
                 {
                     contadorDia += 1;
                     i = -1;

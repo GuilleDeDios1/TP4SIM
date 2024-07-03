@@ -25,7 +25,7 @@ namespace WinFormsApp1
         private void Mostrar_Load(object sender, EventArgs e)
         {
             // Agregar columnas con nombres específicos
-            string[] columnNames = { "Evento", "Dia", "Reloj", "RNDAtencion", "QuienAteiende", "RNDTiempo", "Tiempo", "TiempoLlegada", "RNDTiempo", "Tiempo", "VA", "VB", "A",
+            string[] columnNames = { "Evento", "Dia", "Reloj", "RNDAtencion", "QuienAteiende", "RNDTiempo", "Tiempo", "TiempoLlegada", "RNDTiempo","Complejidad", "Tiempo", "VA", "VB", "A",
                                  "EstadoAprendiz", "ColaAprendiz", "EstadoVeteranoA", "ColaVeteranoA", "EstadoVeteranoB", "ColaVeteranoB", "TiempoLibreA", "ColaMax" };
 
             foreach (string columnName in columnNames)
@@ -50,7 +50,7 @@ namespace WinFormsApp1
             }
 
             // agregar estadisticas
-            Estadisticas frmEstadisticas = new Estadisticas(((float)matrizMostrar[(matrizMostrar.Count() - 1)][19]/ (float)matrizMostrar[(matrizMostrar.Count() - 1)][2])*100, (int)matrizMostrar[(matrizMostrar.Count() - 1)][20]);
+            Estadisticas frmEstadisticas = new Estadisticas(((float)matrizMostrar[(matrizMostrar.Count() - 1)][20]/ (float)matrizMostrar[(matrizMostrar.Count() - 1)][2])*100, (int)matrizMostrar[(matrizMostrar.Count() - 1)][21]);
             frmEstadisticas.Show();
         }
     }

@@ -9,13 +9,13 @@ namespace WinFormsApp1
 {
     public class RK
     {
-        private static List<List<float>> tablaRK = new List<List<float>>();
-        public static float Derivative(float t,float coefA,float coefB)
+        private List<List<float>> tablaRK = new List<List<float>>();
+        public float Derivative(float t,float coefA,float coefB)
         {
             return (coefA * (float) Math.Sqrt(t + coefB));
         }
 
-        public static float RungeKutta4(float h, float C,float coefA,float coefB,float hastaComplejidad)
+        public float RungeKutta4(float h, float C,float coefA,float coefB,float hastaComplejidad)
         {
             if (tablaRK.Count == 0)
             {
@@ -65,5 +65,6 @@ namespace WinFormsApp1
             return devolver;
             
         }
+        public RK() { }
     }
 }
